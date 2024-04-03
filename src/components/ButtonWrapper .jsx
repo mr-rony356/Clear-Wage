@@ -7,12 +7,15 @@ const ButtonWrapper = styled('button')(({ theme, bgColor }) => ({
   color: 'black',
   border: `2px solid ${bgColor}`,
   backgroundColor: bgColor, // Set background color based on prop
-  padding: '5px 20px',
+  padding: '5px 25px',
   cursor: 'pointer',
-  margin: '10px 20px',
+  margin: '20px',
   transition: 'background-color 0.3s, color 0.3s',
   [theme.breakpoints.down('sm')]: {
     padding: '15px 0px', // Adjust padding for mobile view
+  },
+  [theme.breakpoints.down('sm')]: {
+    width: '90%', // Adjust padding for mobile view
   },
   '&:hover': {
     backgroundColor: 'black',
