@@ -7,7 +7,7 @@ const ButtonWrapper = styled('button')(({ theme, bgColor }) => ({
   color: 'black',
   border: `2px solid ${bgColor}`,
   backgroundColor: bgColor, // Set background color based on prop
-  padding: '5px 25px',
+  padding: '5px 35px',
   cursor: 'pointer',
   margin: '20px',
   transition: 'background-color 0.3s, color 0.3s',

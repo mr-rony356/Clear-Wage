@@ -10,27 +10,32 @@ const Results = () => {
   const { stepData } = useStepData();
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortBy, setSortBy] = useState('');
   const [sortField, setSortField] = useState(''); // Define sortField state
   useEffect(() => {
+    // Function to fetch data from API
     const fetchData = async () => {
       try {
-        const response = await fetch('https://script.googleusercontent.com/macros/echo?user_content_key=Gox8Yxj9Xkx2Mj-hh9XlybaXSrjQZkmL32M5ORyIsV5Q1AyskWQFAhjp-dzf-2oqikjssfwZOJinCRMOQ8huLA29vKzFsf0_m5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnBZn555hPh7nQPT3WCF0L6thwDqpvGOHmiIKOTLBsiFzBV4dOMj48R40MrRZX_xPEX_cu-MpzZbUsORAp-86070hpwiEvJ06X9z9Jw9Md8uu&lib=MOpEj6QX97YA2weaw2cs1PFTKA_AgTfX_');
-        const data = await response.json();
-        setTableData(data);
+        const response = await fetch('https://script.google.com/macros/s/AKfycbwvl3YuSzys8_SsZOPG8kqhq2E_vqFuc-mTYc8g8yJ-I4KHirvhMSsQlnogJc5LVgGB/exec');
+        const newData = await response.json();
+        
+        // Concatenate new data with existing data, ensuring new entries come first
+        setTableData([...newData, ...tableData]); 
+  
         setLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-
+  
+    // Fetch initial data when the component mounts
     fetchData();
+  
   }, [stepData]);
-
+  
   // Filter table data based on the search query
   const filteredData = tableData.filter(row => {
     // Convert search query into an array of lowercase keywords
-    const keywords = searchQuery.toLowerCase().split(',');
+    const keywords = searchQuery.toLowerCase().split(', ');
 
     // Check if all keywords are present in any field of the row
     return keywords.every(keyword => (
@@ -89,8 +94,7 @@ const Results = () => {
               
             }}
             inputProps={{
-              style: { color: 'black' }, // Set the color of the placeholder text
-              placeholderStyle: { color: 'black' }, // Set the color of the placeholder itself
+              style: { color: 'black' } // Set the color of the placeholder text
             }}
           >
           <MenuItem value="">Sort By</MenuItem>

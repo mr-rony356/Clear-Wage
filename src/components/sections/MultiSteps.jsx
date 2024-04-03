@@ -51,7 +51,7 @@ function Modal({ open, onClose }) {
         setStep(step - 1);
     };
 
-    const scriptUrl = "https://script.google.com/macros/s/AKfycbwEW7_1bPg_f2Ug7wkly0ym159vO3PyVG6S7q2QiUGF0WCbC-EB08VnfZPiv_9vTYh_tw/exec"
+    const scriptUrl = "https://script.googleusercontent.com/macros/echo?user_content_key=bJO9IeywR4HwqLD9mRpLJKAHpylneZzi7lmSFG1_HxRyqHc8sbM6u2okl1vwYrFlUMVmipnoJGtGiVqCcgJ7xahKN1E4lrSOm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnGoDstob5bRchnlHuxuPKgNNFaBQPrg4JDeOa_4AthwWMqL9hhLm8piECOw0b4OBvJ-Nm-b85TrLoXxUGkrz_FdLuj1dJf2Xtg&lib=MKO9wibHuzNFktCrY5UUZ8VQQbPcGcXLZ"
     const handleSubmit = (e) => {
         setShowPopup(true);
 
@@ -165,8 +165,8 @@ function Modal({ open, onClose }) {
                                             onChange={handleInputChange}
                                         >
                                             <MenuItem value="">Select Practice Area</MenuItem>
-                                            <MenuItem value="Insurance defense litigation">Insurance defense litigation</MenuItem>
-                                            <MenuItem value="Insurance plaintiff litigation">Insurance plaintiff litigation</MenuItem>
+                                            <MenuItem value="Insurance defense litigation">Insurance Defense Litigation</MenuItem>
+                                            <MenuItem value="Insurance plaintiff litigation">Insurance Plaintiff Litigation</MenuItem>
                                             <MenuItem value="Corporate">Corporate</MenuItem>
                                             <MenuItem value="Civil Litigation">Civil Litigation</MenuItem>
                                             <MenuItem value="Commercial  Litigation">Commercial  Litigation</MenuItem>
