@@ -1,15 +1,15 @@
 import React from 'react';
-import { styled, useTheme, useMediaQuery } from '@mui/material';
+import { styled, useTheme, useMediaQuery, Button } from '@mui/material';
 import ButtonStyled from './ButtonWrapper ';
 
-const HeroWrapper = styled('div')(({theme})=>(  {
+const HeroWrapper = styled('div')(({ theme }) => ({
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
   textAlign: 'center',
   color: 'white',
-  width:'95%',
+  width: '95%',
 
 
 }));
@@ -32,12 +32,11 @@ function HeroSection() {
     <HeroWrapper>
       <Title>Salary Transparency For Attorneys</Title>
       <div className="flex-center">
-      <Subtitle style={{maxWidth:isMobile?'100%':'70%'}}>The #1 question on every attorney’s mind when looking at a new firm is always about Salary. That information has always been private. Until now.</Subtitle>
+        <Subtitle style={{ maxWidth: isMobile ? '100%' : '70%' }}>The #1 question on every attorney’s mind when looking at a new firm is always about Salary. That information has always been private. Until now.</Subtitle>
 
       </div>
-      <ButtonStyled openModal={true}>Contribute</ButtonStyled>
-      <ButtonStyled scrollToSection={true}>View Data</ButtonStyled>
-      
+      <ButtonStyled openModal={true} bgColor="rgb(25, 255, 133)">Contribute</ButtonStyled>
+      <ButtonStyled scrollToSection={true} bgColor="white">View Data</ButtonStyled>
     </HeroWrapper>
   );
 }

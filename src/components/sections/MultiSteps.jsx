@@ -28,7 +28,8 @@ function Modal({ open, onClose }) {
         Bonuses: '',
         MinAnnualBillableRequirement: '',
         Gender: '',
-        Ethnicity: ''
+        Ethnicity: '',
+        Date_Documented: '2024'
     });
     const [step, setStep] = useState(1);
 
@@ -167,9 +168,10 @@ function Modal({ open, onClose }) {
                                             <MenuItem value="Insurance defense litigation">Insurance defense litigation</MenuItem>
                                             <MenuItem value="Insurance plaintiff litigation">Insurance plaintiff litigation</MenuItem>
                                             <MenuItem value="Corporate">Corporate</MenuItem>
-                                            <MenuItem value="Litigation">Litigation</MenuItem>
+                                            <MenuItem value="Civil Litigation">Civil Litigation</MenuItem>
+                                            <MenuItem value="Commercial  Litigation">Commercial  Litigation</MenuItem>
                                             <MenuItem value="Banking">Banking</MenuItem>
-                                            <MenuItem value="INSURANCE">INSURANCE</MenuItem>
+                                            <MenuItem value="Insurance ">Insurance </MenuItem>
                                             <MenuItem value="Bankruptcy">Bankruptcy</MenuItem>
                                             <MenuItem value="Education">Education</MenuItem>
                                             <MenuItem value="Energy">Energy</MenuItem>
@@ -214,7 +216,7 @@ function Modal({ open, onClose }) {
                                             onChange={handleInputChange}
                                         >
                                             <MenuItem value="">Select JD Year</MenuItem>
-                                            {Array.from({ length: 24 }, (_, index) => 2023 - index).map((year, index) => (
+                                            {Array.from({ length: 23 }, (_, index) => 2023 - index).map((year, index) => (
                                                 <MenuItem key={index} value={year.toString()}>{year}</MenuItem>
                                             ))}
 

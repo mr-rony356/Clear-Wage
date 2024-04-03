@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { styled } from '@mui/system';
 import Modal from './sections/MultiSteps'; // Import the Modal component
 
-const ButtonWrapper = styled('button')(({ theme }) => ({
+const ButtonWrapper = styled('button')(({ theme, bgColor }) => ({
   fontSize: '20px',
-  color: 'white',
-  border: '2px solid white',
-  backgroundColor: 'transparent',
+  color: 'black',
+  border: `2px solid ${bgColor}`,
+  backgroundColor: bgColor, // Set background color based on prop
   padding: '5px 20px',
   cursor: 'pointer',
   margin: '10px 20px',
@@ -14,16 +14,13 @@ const ButtonWrapper = styled('button')(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     padding: '15px 0px', // Adjust padding for mobile view
   },
-  [theme.breakpoints.down('sm')]: {
-    width: '90%', // Adjust width for mobile view
-  },
   '&:hover': {
-    backgroundColor: 'white',
-    color: 'black',
+    backgroundColor: 'black',
+    color: bgColor, // Set color to match background color
   },
 }));
 
-function ButtonStyled({ children, onClick, scrollToSection, openModal }) {
+function ButtonStyled({ children, onClick, scrollToSection, openModal, bgColor }) {
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleButtonClick = () => {
@@ -45,7 +42,7 @@ function ButtonStyled({ children, onClick, scrollToSection, openModal }) {
 
   return (
     <>
-      <ButtonWrapper onClick={handleButtonClick}>{children}</ButtonWrapper>
+      <ButtonWrapper onClick={handleButtonClick} bgColor={bgColor}>{children}</ButtonWrapper>
       {modalOpen && <Modal open={modalOpen} onClose={handleCloseModal} />} {/* Render the Modal component when modalOpen is true */}
     </>
   );

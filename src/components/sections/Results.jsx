@@ -30,7 +30,7 @@ const Results = () => {
   // Filter table data based on the search query
   const filteredData = tableData.filter(row => {
     // Convert search query into an array of lowercase keywords
-    const keywords = searchQuery.toLowerCase().split(' ');
+    const keywords = searchQuery.toLowerCase().split(',');
 
     // Check if all keywords are present in any field of the row
     return keywords.every(keyword => (
@@ -42,6 +42,7 @@ const Results = () => {
       row.Salary.toString().toLowerCase().includes(keyword) ||
       row.Bonuses.toString().toLowerCase().includes(keyword) ||
       row.Gender.toLowerCase().includes(keyword) ||
+      row.JDYear.toString().toLowerCase().includes(keyword) ||
       row.Ethnicity.toLowerCase().includes(keyword)
     ));
   });
@@ -53,7 +54,7 @@ const Results = () => {
       return 0;
     }
 
-    if (sortField === 'Salary' || sortField === 'Bonuses') {
+    if (sortField === 'Salary' || sortField === 'Bonuses'|| sortField === 'JDYear') {
       return parseFloat(a[sortField]) - parseFloat(b[sortField]);
     } else {
       return a[sortField].localeCompare(b[sortField]);
@@ -78,8 +79,6 @@ const Results = () => {
       </div>
       <div style={{ width: '100%', height: '25px', textAlign: 'right' }}>
       <Select
-            label='s'
-            placeholder='ss'
             value={sortField}
             onChange={(e) => setSortField(e.target.value)}
             fullWidth
@@ -111,7 +110,6 @@ const Results = () => {
       <ul style={{ listStyleType: 'none', padding: 0, border: '1px solid black', width: isMobile ? '100%' : '100%', marginTop: isMobile ? '10px' : '0' }}>
         <li style={{ fontWeight: 'bold', 
         display: 'flex', 
-        justifyContent: 'space-between',
          borderBottom: '1px solid black',
           padding: '10px 0', color: 'black',
           fontSize:isMobile? '9px':'14px' }}>
@@ -133,7 +131,7 @@ const Results = () => {
         ) : (
           sortedData.map((rowData, index) => (
             <li key={index} style={{ display: 'flex', 
-            justifyContent: 'start', borderBottom: '1px solid black', 
+             borderBottom: '1px solid black', 
             padding: '10px 0', color: 'black', fontSize:isMobile? '8px':'14px' }}>
               <span style={{ flex: 2 }}>{rowData.JDYear}</span>
               <span style={{ flex: 2 }}>{rowData.PracticeArea}</span>

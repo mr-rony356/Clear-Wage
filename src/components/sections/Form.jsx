@@ -36,7 +36,7 @@ function Form() {
                 </div>
 
             </Box>
-            <ButtonStyled openModal={true}>Contribute</ButtonStyled>
+            <ButtonStyled openModal={true} bgColor="rgb(25, 255, 133)">Contribute</ButtonStyled>
         </MiuiSection>
 
     );
