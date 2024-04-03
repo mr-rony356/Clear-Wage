@@ -12,10 +12,9 @@ const ButtonWrapper = styled('button')(({ theme, bgColor }) => ({
   margin: '20px',
   transition: 'background-color 0.3s, color 0.3s',
   [theme.breakpoints.down('sm')]: {
-    padding: '15px 0px', // Adjust padding for mobile view
-  },
-  [theme.breakpoints.down('sm')]: {
-    width: '90%', // Adjust padding for mobile view
+    width: '90%',
+    padding: '10px 0px', // Adjust padding for mobile view
+    // Adjust padding for mobile view
   },
   '&:hover': {
     backgroundColor: 'black',
