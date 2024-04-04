@@ -5,7 +5,7 @@ const FooterWrapper = styled('footer')({
   backgroundColor: 'black',
   color: 'white',
   textAlign: 'center',
-  padding: '20px 0',
+  padding: '10px 0',
   width: '100%',
   fontSize:'14px'
 });

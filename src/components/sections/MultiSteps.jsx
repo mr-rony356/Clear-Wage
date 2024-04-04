@@ -15,6 +15,35 @@ function Modal({ open, onClose }) {
         phone: '',
         email: '',
     });
+    const isStepComplete = (step) => {
+        switch (step) {
+            case 1:
+                return formData.FirmName == '' ||formData.FirmName !== '' ;
+            case 2:
+                return formData.Title !== '';
+            case 3:
+                return formData.PracticeArea !== '';
+            case 4:
+                return formData.JDYear !== '';
+            case 5:
+                return formData.State !== '';
+            case 6:
+                return formData.City !== '';
+            case 7:
+                return formData.Salary !== '';
+            case 8:
+                return formData.Bonuses !== '';
+            case 9:
+                return formData.MinAnnualBillableRequirement !== '';
+            case 10:
+                return formData.Gender !== '';
+            case 11:
+                return formData.Ethnicity !== '';
+            default:
+                return false;
+        }
+    };
+
     const [showPopup, setShowPopup] = useState(false);
     const [formData, setFormData] = useState({
         FirmName: '',
@@ -51,7 +80,7 @@ function Modal({ open, onClose }) {
         setStep(step - 1);
     };
 
-    const scriptUrl = "https://script.googleusercontent.com/macros/echo?user_content_key=bJO9IeywR4HwqLD9mRpLJKAHpylneZzi7lmSFG1_HxRyqHc8sbM6u2okl1vwYrFlUMVmipnoJGtGiVqCcgJ7xahKN1E4lrSOm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnGoDstob5bRchnlHuxuPKgNNFaBQPrg4JDeOa_4AthwWMqL9hhLm8piECOw0b4OBvJ-Nm-b85TrLoXxUGkrz_FdLuj1dJf2Xtg&lib=MKO9wibHuzNFktCrY5UUZ8VQQbPcGcXLZ"
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbxWJzD7pTYLpFvgi_Y7PuLhKCpbUAW9FR_TLupd-HoIkJVqcknqw7KRfrWf3O5XxsU/exec"
     const handleSubmit = (e) => {
         setShowPopup(true);
 
@@ -80,6 +109,7 @@ function Modal({ open, onClose }) {
         setShowPopup(true);
 
     };
+
     const handlePopupClose = () => {
         setShowPopup(false);
     };
@@ -88,13 +118,13 @@ function Modal({ open, onClose }) {
         const currentDate = new Date().toLocaleDateString('en-US', { timeZone: 'UTC' });
 
         try {
-            await emailjs.send('service_e8j9s9a', 'template_vk7obtx', {
+            await emailjs.send('service_h5aj7mu', 'template_0v360iu', {
                 firstName: userFormData.firstName,
                 lastName: userFormData.lastName,
                 cellNumber: userFormData.cellNumber,
                 personalEmail: userFormData.personalEmail,
                 date: currentDate
-            }, 'Yt0_FXKk8p02kuzC4');
+            }, 's9CcYy5vclsSxAZhY');
 
             console.log('Email sent successfully');
         } catch (error) {
@@ -140,6 +170,7 @@ function Modal({ open, onClose }) {
                                         <Select
                                             name="Title"
                                             value={formData.Title}
+                                            required
                                             onChange={handleInputChange}
                                         >
                                             <MenuItem value="">Select Title</MenuItem>
@@ -162,6 +193,7 @@ function Modal({ open, onClose }) {
                                         <Select
                                             name="PracticeArea"
                                             value={formData.PracticeArea}
+                                            required
                                             onChange={handleInputChange}
                                         >
                                             <MenuItem value="">Select Practice Area</MenuItem>
@@ -219,7 +251,7 @@ function Modal({ open, onClose }) {
                                             {Array.from({ length: 23 }, (_, index) => 2023 - index).map((year, index) => (
                                                 <MenuItem key={index} value={year.toString()}>{year}</MenuItem>
                                             ))}
-
+                                            <MenuItem value="Before 2000">Before 2000</MenuItem> {/* Add this option */}
                                         </Select>
                                     </FormControl>
                                     {/* Add other input fields for step 4 if needed */}
@@ -314,21 +346,13 @@ function Modal({ open, onClose }) {
                             )}
                             {step === 11 && (
                                 <>
-                                    <FormControl fullWidth>
-                                        <InputLabel>Ethnicity</InputLabel>
-                                        <Select
-                                            name="Ethnicity"
-                                            value={formData.Ethnicity}
-                                            onChange={handleInputChange}
-                                        >
-                                            <MenuItem value="">Select Ethnicity</MenuItem>
-                                            <MenuItem value="Caucasian">Caucasian</MenuItem>
-                                            <MenuItem value="Black">Black</MenuItem>
-                                            <MenuItem value="Hispanic">Hispanic</MenuItem>
-                                            <MenuItem value="Asian">Asian</MenuItem>
-                                        </Select>
-                                    </FormControl>
-                                    {/* Add other input fields for step 11 if needed */}
+                                    <TextField
+                                        label="Ethnicity"
+                                        name="Ethnicity"
+                                        value={formData.Ethnicity}
+                                        onChange={handleInputChange}
+                                        fullWidth
+                                    />
                                 </>
                             )}
 
@@ -339,9 +363,10 @@ function Modal({ open, onClose }) {
                                 <Button onClick={handlePrevStep}>Back</Button>
                             )}
                             {step !== 11 ? (
-                                <Button onClick={handleNextStep}>Next</Button>
+                                // Check if all required fields are filled before proceeding to the next step
+                                <Button onClick={handleNextStep} disabled={!isStepComplete(step)}>Next</Button>
                             ) : (
-                                <Button onClick={handleSubmit}>Finish</Button>
+                                <Button onClick={handleSubmit}>Done</Button>
                             )}
                         </DialogActions>
                     </Dialog>
