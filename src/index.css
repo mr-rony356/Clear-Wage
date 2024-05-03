@@ -83,6 +83,15 @@ body {
 .tables .body span:last-child {
   border-right: none;
 }
+.header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+}
 
 @media (max-width: 768px) {
   .tables .body span {
@@ -90,18 +99,9 @@ body {
     padding: 5px 2px;
     text-align: left;
     border-right: 1px solid black;
-    letter-spacing: 0.8px;
+    letter-spacing: 0.2px;
   }
   .tables li.header span {
     padding: 15px 5px;
-  }
-  .header {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    z-index: 1;
-    background-color: black;
-    color: white;
-    font-weight: bold;
   }
 }
