@@ -83,15 +83,6 @@ body {
 .tables .body span:last-child {
   border-right: none;
 }
-.header {
-  position: sticky;
-  top: 0;
-  width: 100%;
-  z-index: 1;
-  background-color: black;
-  color: white;
-  font-weight: bold;
-}
 
 @media (max-width: 768px) {
   .tables .body span {

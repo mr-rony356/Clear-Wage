@@ -150,7 +150,6 @@ const Results = () => {
           </Select>
         </FormControl>
       </div>
-      <div style={{ overflowY: "auto", maxHeight: "100vh", width: "100%" }}>
         <ul
           class="tables"
           style={{
@@ -266,7 +265,6 @@ const Results = () => {
           )}
         </ul>
       </div>
-    </div>
   );
 };
 
