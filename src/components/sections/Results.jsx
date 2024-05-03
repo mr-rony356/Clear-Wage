@@ -151,88 +151,33 @@ const Results = () => {
         </FormControl>
       </div>
       {isMobile ? (
-        <ul
-          class="mobile-tables"
-          style={{
-            listStyleType: "none",
-            display: "flex",
-            width: "95%",
-            marginTop: isMobile ? "10px" : "0",
-            flexDirection: "column",
-            height: "100vh",
-          }}
-        >
-          <div
-            style={{
-              overflowY: "scroll",
-              flexGrow: 1,
-              gap: "10px",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
+        <div class="mobile-table">
+          <ul class="header">
+            <li>JD Year</li>
+            <li>Practice Area</li>
+            <li>Title</li>
+            <li>Salary</li>
+            <li>Bonus</li>
+            <li>City</li>
+            <li>State</li>
+            <li>Gender</li>
+            <li>Date</li>
+          </ul>
+          <ul class="body">
             {loading ? (
               <div className="flex-center" style={{ height: "80px" }}>
                 <CircularProgress />
               </div>
             ) : (
               sortedData.map((rowData, index) => (
-                <li
-                  className="body"
-                  key={index}
-                  style={{
-                    backgroundColor: index % 2 === 0 ? "#f5f7f9" : "white",
-                    display: "flex",
-                    border: "1px solid black",
-                    flexDirection: "column",
-                    color: "black",
-                    maxWidth: "100vw",
-                    gap: "10px", // Added gap between spans
-                  }}
-                >
-                  <span
-                    style={{
-                      textAlign: "justify",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      borderBottom: "1px solid black",
-                    }}
-                  >
-                    <span style={{ fontWeight: "bold" }}>JD Year</span>{" "}
-                    {/* First span made bold */}
-                    {rowData.JDYear}
-                  </span>
-                  <span
-                    style={{
-                      textAlign: "right",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      borderBottom: "1px solid black",
-                    }}
-                  >
-                    <span style={{ fontWeight: "bold" }}>Practice Area</span>
-                    {rowData.PracticeArea}
-                  </span>
-                  <span
-                    style={{
-                      textAlign: "justify",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      borderBottom: "1px solid black",
-                    }}
-                  >
-                    <span style={{ fontWeight: "bold" }}>Title</span>
-                    {rowData.Title}
-                  </span>
-                  <span
-                    style={{
-                      textAlign: "justify",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      borderBottom: "1px solid black",
-                    }}
-                  >
-                    <span style={{ fontWeight: "bold" }}>Salary</span>
+                <li key={index} style={{
+                  backgroundColor: index % 2 === 0 ? "#f5f7f9" : "white",
+
+                }}>
+                  <span>{rowData.JDYear}</span>
+                  <span>{rowData.PracticeArea}</span>
+                  <span>{rowData.Title}</span>
+                  <span>
                     {rowData.Salary.toLocaleString("en-US", {
                       style: "currency",
                       currency: "USD",
@@ -240,15 +185,7 @@ const Results = () => {
                       maximumFractionDigits: 0,
                     })}
                   </span>
-                  <span
-                    style={{
-                      textAlign: "justify",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      borderBottom: "1px solid black",
-                    }}
-                  >
-                    <span style={{ fontWeight: "bold" }}>Bonus</span>
+                  <span>
                     {rowData.Bonuses.toLocaleString("en-US", {
                       style: "currency",
                       currency: "USD",
@@ -256,47 +193,10 @@ const Results = () => {
                       maximumFractionDigits: 0,
                     })}
                   </span>
-                  <span
-                    style={{
-                      textAlign: "justify",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      borderBottom: "1px solid black",
-                    }}
-                  >
-                    <span style={{ fontWeight: "bold" }}>City</span>
-                    {rowData.City}
-                  </span>
-                  <span
-                    style={{
-                      textAlign: "justify",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      borderBottom: "1px solid black",
-                    }}
-                  >
-                    <span style={{ fontWeight: "bold" }}>State</span>
-                    {rowData.State}
-                  </span>
-                  <span
-                    style={{
-                      textAlign: "justify",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      borderBottom: "1px solid black",
-                    }}
-                  >
-                    <span style={{ fontWeight: "bold" }}>Gender</span>
-                    {rowData.Gender}
-                  </span>
-                  <span
-                    style={{
-                      textAlign: "justify",
-                      display: "flex",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <span style={{ fontWeight: "bold" }}>Date</span>
+                  <span>{rowData.City}</span>
+                  <span>{rowData.State}</span>
+                  <span>{rowData.Gender}</span>
+                  <span>
                     {rowData.Date_Documented
                       ? new Date(rowData.Date_Documented).toLocaleDateString(
                           "en-US",
@@ -311,15 +211,9 @@ const Results = () => {
                 </li>
               ))
             )}
-            {!loading && sortedData.length === 0 && (
-              <li
-                style={{ padding: "10px 0", color: "black", fontSize: "14px" }}
-              >
-                No Data found
-              </li>
-            )}
-          </div>
-        </ul>
+            {!loading && sortedData.length === 0 && <li>No Data found</li>}
+          </ul>
+        </div>
       ) : (
         <ul
           class="tables"

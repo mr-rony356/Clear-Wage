@@ -61,6 +61,9 @@ body {
   border-right: 1px solid white;
   text-align: center;
 }
+.tables li.header span :last-child {
+  border-right: none;
+}
 
 .tables li:not(.header) {
   display: flex;
@@ -85,28 +88,56 @@ body {
 .tables li span:last-child {
   text-align: right;
 }
-.mobile-tables .body span {
-  flex: 1;
-  border-right: 1px solid white;
-  text-align: left;
-  font-size: 16px;
-  padding: 5px;
-  /* border-bottom: 1px solid black; */
+.mobile-table {
+  display: flex;
+  overflow-x: auto;
+  color: black;
+  width: 100%;
 }
-.mobile-tables .body span:first-child {
-  flex: 1;
-  /* border-bottom: 1px solid black; */
+
+.mobile-table .header,
+.body {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid black;
 }
-/* 
-.mobile-tables .body span:last-child {
+.mobile-table .header {
+  list-style-type: none;
+  position: sticky;
+  left: 0;
+  width: 30% !important;
+  z-index: 1;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.mobile-table .header li {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid white;
+  min-height: 80px !important;
+}
+
+.mobile-table .body {
+  overflow-x: auto;
+  flex-grow: 1;
+  display: flex;
+  width: 90%;
+}
+
+.mobile-table .body li {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-table .body li span {
   flex: 1;
   padding: 10px;
-  border-right: 1px solid white;
-  text-align: center !important;
-  min-width: max-content;
+  text-align: center;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  min-height: 73px !important;
 }
-.mobile-tables .body span:first-child {
-  flex: 1;
-  border-right: 1px solid white;
-  text-align: left !important;
-} */
