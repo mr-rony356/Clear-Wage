@@ -3,8 +3,8 @@ import Box from '@mui/material/Box';
 import { styled } from '@mui/system';
 
 const MiuiSection = styled(Box)({
-    background: '#244b24',
-    backgroundSize: 'cover',
+  background: 'linear-gradient(rgb(37 37 37 / 90%), rgb(10 14 19 / 64%)), url(/bg1.jpg) 50% no-repeat',
+      backgroundSize: 'cover',
     minHeight:'100vh',
     position:'relative'
 });

@@ -59,10 +59,10 @@ function Modal({ open, onClose }) {
         return formData.Gender !== "";
 
       case 9:
+        return formData.FirmSize !== "";
+      case 10:
         return formData.FirmName !== "";
 
-      case 10:
-        return formData.FirmSize !== "";
       default:
         return false;
     }
@@ -81,7 +81,11 @@ function Modal({ open, onClose }) {
     Salary: "",
     Bonuses: "",
     Gender: "",
-    Date_Documented: new Date(),
+    Date_Documented: new Date().toLocaleDateString("en-US", {
+      month: "2-digit",
+      day: "2-digit",
+      year: "numeric",
+    }),
   });
   const [step, setStep] = useState(1);
 
@@ -210,6 +214,7 @@ function Modal({ open, onClose }) {
                   <Select
                     name="JDYear"
                     value={formData.JDYear}
+                    label="JD Year"
                     onChange={handleInputChange}
                   >
                     <MenuItem value="">Select JD Year</MenuItem>
@@ -234,7 +239,7 @@ function Modal({ open, onClose }) {
                   <Select
                     name="Title"
                     value={formData.Title}
-                    required
+                    label="Title"
                     onChange={handleInputChange}
                   >
                     <MenuItem value="">Select Title</MenuItem>
@@ -264,7 +269,7 @@ function Modal({ open, onClose }) {
                   <Select
                     name="PracticeArea"
                     value={formData.PracticeArea}
-                    required
+                    label="Practice Area"
                     onChange={handleInputChange}
                   >
                     <MenuItem value="">Select Practice Area</MenuItem>
@@ -321,6 +326,7 @@ function Modal({ open, onClose }) {
                     value={formData.OtherPracticeArea}
                     onChange={handleInputChange}
                     fullWidth
+                    sx={{ marginTop: "10px" }}
                   />
                 )}
                 {/* Add other input fields for step 3 if needed */}
@@ -364,7 +370,7 @@ function Modal({ open, onClose }) {
                     startAdornment={
                       <InputAdornment position="start">$</InputAdornment>
                     }
-                    label="Bonuses"
+                    label=" Last year Bonuses"
                     value={formData.Bonuses} // Set the value here
                     onChange={handleInputChange} // Ensure onChange is handled for input change
                   />
@@ -379,6 +385,7 @@ function Modal({ open, onClose }) {
                   <Select
                     name="Gender"
                     value={formData.Gender}
+                    label="Gender"
                     onChange={handleInputChange}
                   >
                     <MenuItem value="">Select Gender</MenuItem>
@@ -392,20 +399,6 @@ function Modal({ open, onClose }) {
               </>
             )}
             {step === 9 && (
-              <>
-                <TextField
-                  label="Firm Name"
-                  name="FirmName"
-                  value={formData.FirmName}
-                  onChange={handleInputChange}
-                  fullWidth
-                  size="small"
-                  margin="normal"
-                />
-              </>
-            )}
-
-            {step === 10 && (
               <>
                 <FormControl fullWidth>
                   <InputLabel>Firm Size</InputLabel>
@@ -431,15 +424,36 @@ function Modal({ open, onClose }) {
                 </FormControl>
               </>
             )}
+
+            {step === 10 && (
+              <>
+                <FormControl fullWidth>
+                  <TextField
+                    label="Firm Name"
+                    name="FirmName"
+                    value={formData.FirmName}
+                    onChange={handleInputChange}
+                    fullWidth
+                  />
+                </FormControl>
+              </>
+            )}
           </DialogContent>
 
           <DialogActions>
             {step !== 1 && <Button onClick={handlePrevStep}>Back</Button>}
             {step !== 10 ? (
               // Check if all required fields are filled before proceeding to the next step
-              <Button onClick={handleNextStep} disabled={!isStepComplete(step)}>
-                Next
-              </Button>
+              step === 7 || step === 8 ? (
+                <Button onClick={handleNextStep}>Skip</Button>
+              ) : (
+                <Button
+                  onClick={handleNextStep}
+                  disabled={!isStepComplete(step)}
+                >
+                  Next
+                </Button>
+              )
             ) : (
               <Button onClick={handleSubmit}>Done</Button>
             )}

@@ -104,22 +104,40 @@ const Results = () => {
           }}
         ></SearchIcon>
       </div>
-      <div style={{ width: "100%", height: "25px", textAlign: "right" }}>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "end",
+          position: "relative",
+          height: "30px",
+        }}
+      >
+        <FormControl
+          size="small"
+          sx={{
+            width: isMobile ? "25%" : "120px",
+            position: "absolute",
+            top: "0px",
+            right: "0px",
+          }}
+        >
+          <InputLabel id="demo-simple-select-label">Filter By</InputLabel>
           <Select
             value={sortField}
-            placeholder="Sort By"
             onChange={(e) => setSortField(e.target.value)}
-            fullWidth
+            name="sortField"
+            label="Sort By"
             size="small"
+            labelId="demo-simple-select-label"
             sx={{
-              width: isMobile ? "25%" : "10%",
               color: "black",
             }}
             inputProps={{
               style: { color: "black" }, // Set the color of the placeholder text
             }}
           >
-            <MenuItem value="">Filter By</MenuItem>
+            <MenuItem value="">None</MenuItem>
             <MenuItem value="Title">Title</MenuItem>
             <MenuItem value="PracticeArea">Practice Area</MenuItem>
             <MenuItem value="JDYear">JD Year</MenuItem>
@@ -130,88 +148,285 @@ const Results = () => {
             <MenuItem value="Gender">Gender</MenuItem>
             {/* Add more sorting options if needed */}
           </Select>
+        </FormControl>
       </div>
-      <ul
-        style={{
-          listStyleType: "none",
-          padding: 0,
-          border: "1px solid black",
-          width: isMobile ? "100%" : "100%",
-          marginTop: isMobile ? "10px" : "0",
-        }}
-      >
-        <li
+      {isMobile ? (
+        <ul
+          class="mobile-tables"
           style={{
-            fontWeight: "bold",
+            listStyleType: "none",
             display: "flex",
-            borderBottom: "1px solid black",
-            padding: "10px 0",
-            color: "black",
-            fontSize: isMobile ? "9px" : "14px",
+            width: "95%",
+            marginTop: isMobile ? "10px" : "0",
+            flexDirection: "column",
+            height: "100vh",
           }}
         >
-          <span style={{ flex: 2 }}>JD Year</span>
-          <span style={{ flex: 2 }}>Practice Area</span>
-          <span style={{ flex: 2 }}>Title</span>
-          <span style={{ flex: 2 }}>Salary</span>
-          <span style={{ flex: 2 }}> Bonus</span>
-          <span style={{ flex: 2 }}> City</span>
-          <span style={{ flex: 2 }}> State</span>
-          <span style={{ flex: 2 }}> Gender</span>
-          <span style={{ flex: 2 }}> Date Documented</span>
-        </li>
-        {loading ? (
-          <div className="flex-center" style={{ height: "80px" }}>
-            <CircularProgress />
+          <div
+            style={{
+              overflowY: "scroll",
+              flexGrow: 1,
+              gap: "10px",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            {loading ? (
+              <div className="flex-center" style={{ height: "80px" }}>
+                <CircularProgress />
+              </div>
+            ) : (
+              sortedData.map((rowData, index) => (
+                <li
+                  className="body"
+                  key={index}
+                  style={{
+                    backgroundColor: index % 2 === 0 ? "#f5f7f9" : "white",
+                    display: "flex",
+                    border: "1px solid black",
+                    flexDirection: "column",
+                    color: "black",
+                    maxWidth: "100vw",
+                    gap: "10px", // Added gap between spans
+                  }}
+                >
+                  <span
+                    style={{
+                      textAlign: "justify",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      borderBottom: "1px solid black",
+                    }}
+                  >
+                    <span style={{ fontWeight: "bold" }}>JD Year</span>{" "}
+                    {/* First span made bold */}
+                    {rowData.JDYear}
+                  </span>
+                  <span
+                    style={{
+                      textAlign: "right",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      borderBottom: "1px solid black",
+                    }}
+                  >
+                    <span style={{ fontWeight: "bold" }}>Practice Area</span>
+                    {rowData.PracticeArea}
+                  </span>
+                  <span
+                    style={{
+                      textAlign: "justify",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      borderBottom: "1px solid black",
+                    }}
+                  >
+                    <span style={{ fontWeight: "bold" }}>Title</span>
+                    {rowData.Title}
+                  </span>
+                  <span
+                    style={{
+                      textAlign: "justify",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      borderBottom: "1px solid black",
+                    }}
+                  >
+                    <span style={{ fontWeight: "bold" }}>Salary</span>
+                    {rowData.Salary.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                    })}
+                  </span>
+                  <span
+                    style={{
+                      textAlign: "justify",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      borderBottom: "1px solid black",
+                    }}
+                  >
+                    <span style={{ fontWeight: "bold" }}>Bonus</span>
+                    {rowData.Bonuses.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                    })}
+                  </span>
+                  <span
+                    style={{
+                      textAlign: "justify",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      borderBottom: "1px solid black",
+                    }}
+                  >
+                    <span style={{ fontWeight: "bold" }}>City</span>
+                    {rowData.City}
+                  </span>
+                  <span
+                    style={{
+                      textAlign: "justify",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      borderBottom: "1px solid black",
+                    }}
+                  >
+                    <span style={{ fontWeight: "bold" }}>State</span>
+                    {rowData.State}
+                  </span>
+                  <span
+                    style={{
+                      textAlign: "justify",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      borderBottom: "1px solid black",
+                    }}
+                  >
+                    <span style={{ fontWeight: "bold" }}>Gender</span>
+                    {rowData.Gender}
+                  </span>
+                  <span
+                    style={{
+                      textAlign: "justify",
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <span style={{ fontWeight: "bold" }}>Date</span>
+                    {rowData.Date_Documented
+                      ? new Date(rowData.Date_Documented).toLocaleDateString(
+                          "en-US",
+                          {
+                            month: "2-digit",
+                            day: "2-digit",
+                            year: "numeric",
+                          }
+                        )
+                      : "-"}
+                  </span>
+                </li>
+              ))
+            )}
+            {!loading && sortedData.length === 0 && (
+              <li
+                style={{ padding: "10px 0", color: "black", fontSize: "14px" }}
+              >
+                No Data found
+              </li>
+            )}
           </div>
-        ) : (
-          sortedData.map((rowData, index) => (
-            <li
-              key={index}
-              style={{
-                display: "flex",
-                borderBottom: "1px solid black",
-                padding: "10px 0",
-                color: "black",
-                fontSize: isMobile ? "8px" : "14px",
-              }}
-            >
-              <span style={{ flex: 2 }}>{rowData.JDYear}</span>
-              <span style={{ flex: 2 }}>{rowData.PracticeArea}</span>
-              <span style={{ flex: 2 }}>{rowData.Title}</span>
-              <span style={{ flex: 2 }}>
-                {rowData.Salary.toLocaleString("en-US", {
-                  style: "currency",
-                  currency: "USD",
-                })}
-              </span>
-              <span style={{ flex: 2 }}>
-                {rowData.Bonuses.toLocaleString("en-US", {
-                  style: "currency",
-                  currency: "USD",
-                })}
-              </span>
-
-              <span style={{ flex: 2 }}>{rowData.City}</span>
-              <span style={{ flex: 2 }}>{rowData.State}</span>
-              <span style={{ flex: 2 }}>{rowData.Gender}</span>
-              <span style={{ flex: 2 }}>
-                {rowData.Date_Documented
-                  ? new Date(rowData.Date_Documented).toLocaleDateString(
-                      "en-GB"
-                    )
-                  : "-"}
-              </span>
-            </li>
-          ))
-        )}
-        {!loading && sortedData.length === 0 && (
-          <li style={{ padding: "10px 0", color: "black", fontSize: "14px" }}>
-            {" "}
-            No Data found
+        </ul>
+      ) : (
+        <ul
+          class="tables"
+          style={{
+            listStyleType: "none",
+            padding: 0,
+            border: "1px solid black",
+            width: isMobile ? "100%" : "100%",
+            marginTop: isMobile ? "10px" : "0",
+          }}
+        >
+          <li
+            class="header"
+            style={{
+              backgroundColor: "black",
+              color: "white",
+              fontWeight: "bold",
+              display: "flex",
+              borderBottom: "1px solid black",
+              fontSize: isMobile ? "10px" : "14px",
+              textAlign: "center",
+            }}
+          >
+            <span>JD Year</span>
+            <span>Practice Area</span>
+            <span>Title</span>
+            <span>Salary</span>
+            <span>Bonus</span>
+            <span>City</span>
+            <span>State</span>
+            <span>Gender</span>
+            <span>Date</span>
           </li>
-        )}
-      </ul>
+
+          {loading ? (
+            <div className="flex-center" style={{ height: "80px" }}>
+              <CircularProgress />
+            </div>
+          ) : (
+            sortedData.map((rowData, index) => (
+              <li
+                className="body"
+                key={index}
+                style={{
+                  backgroundColor: index % 2 === 0 ? "#f5f7f9" : "white",
+                  display: "flex",
+                  borderBottom: "1px solid black",
+                  color: "black",
+                  fontSize: isMobile ? "10px" : "14px",
+                }}
+              >
+                <span style={{ flex: 2, textAlign: "center" }}>
+                  {rowData.JDYear}
+                </span>
+                <span style={{ flex: 2, textAlign: "left" }}>
+                  {rowData.PracticeArea}
+                </span>
+                <span style={{ flex: 2, textAlign: "left" }}>
+                  {rowData.Title}
+                </span>
+                <span style={{ flex: 2, textAlign: "right" }}>
+                  {rowData.Salary.toLocaleString("en-US", {
+                    style: "currency",
+                    currency: "USD",
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
+                  })}
+                </span>
+                <span style={{ flex: 2, textAlign: "right" }}>
+                  {rowData.Bonuses.toLocaleString("en-US", {
+                    style: "currency",
+                    currency: "USD",
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
+                  })}
+                </span>
+                <span style={{ flex: 2, textAlign: "left" }}>
+                  {rowData.City}
+                </span>
+                <span style={{ flex: 2, textAlign: "left" }}>
+                  {rowData.State}
+                </span>
+                <span style={{ flex: 2, textAlign: "left" }}>
+                  {rowData.Gender}
+                </span>
+                <span style={{ flex: 2, textAlign: "right" }}>
+                  {rowData.Date_Documented
+                    ? new Date(rowData.Date_Documented).toLocaleDateString(
+                        "en-US",
+                        {
+                          month: "2-digit",
+                          day: "2-digit",
+                          year: "numeric",
+                        }
+                      )
+                    : "-"}
+                </span>
+              </li>
+            ))
+          )}
+          {!loading && sortedData.length === 0 && (
+            <li style={{ padding: "10px 0", color: "black", fontSize: "14px" }}>
+              No Data found
+            </li>
+          )}
+        </ul>
+      )}
     </div>
   );
 };

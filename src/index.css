@@ -1,15 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
 @font-face {
   font-family: "Times New Roman";
   src: url("https://db.onlinewebfonts.com/t/32441506567156636049eb850b53f02a.eot");
-  src: url("https://db.onlinewebfonts.com/t/32441506567156636049eb850b53f02a.eot?#iefix")format("embedded-opentype"),
-  url("https://db.onlinewebfonts.com/t/32441506567156636049eb850b53f02a.woff2")format("woff2"),
-  url("https://db.onlinewebfonts.com/t/32441506567156636049eb850b53f02a.woff")format("woff"),
-  url("https://db.onlinewebfonts.com/t/32441506567156636049eb850b53f02a.ttf")format("truetype"),
-  url("https://db.onlinewebfonts.com/t/32441506567156636049eb850b53f02a.svg#Times New Roman")format("svg");
+  src: url("https://db.onlinewebfonts.com/t/32441506567156636049eb850b53f02a.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/32441506567156636049eb850b53f02a.woff2")
+      format("woff2"),
+    url("https://db.onlinewebfonts.com/t/32441506567156636049eb850b53f02a.woff")
+      format("woff"),
+    url("https://db.onlinewebfonts.com/t/32441506567156636049eb850b53f02a.ttf")
+      format("truetype"),
+    url("https://db.onlinewebfonts.com/t/32441506567156636049eb850b53f02a.svg#Times New Roman")
+      format("svg");
 }
-body{ 
+body {
   margin: 0;
   color: white;
   background-repeat: no-repeat;
@@ -20,15 +25,88 @@ body{
   box-sizing: border-box;
 }
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
-*{
+* {
   margin: 0;
   padding: 0;
 }
-.flex-center{
+.flex-center {
   display: flex;
   justify-content: center !important;
   align-items: center !important;
 }
+.tables ul {
+  list-style-type: none;
+  padding: 0;
+  border: 1px solid black;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.tables li.header {
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  border-bottom: 1px solid black;
+  font-size: 14px;
+  text-align: center;
+}
+
+.tables li.header span {
+  flex: 2;
+  padding: 10px 15px;
+  border-right: 1px solid white;
+  text-align: center;
+}
+
+.tables li:not(.header) {
+  display: flex;
+  border-bottom: 1px solid black;
+}
+
+.tables li:nth-child(even) {
+  background-color: #f5f7f9;
+}
+
+.tables .body span {
+  flex: 2;
+  padding: 10px 15px;
+  text-align: left;
+  border-right: 1px solid black;
+}
+
+.tables .body span:last-child {
+  border-right: none;
+}
+
+.tables li span:last-child {
+  text-align: right;
+}
+.mobile-tables .body span {
+  flex: 1;
+  border-right: 1px solid white;
+  text-align: left;
+  font-size: 16px;
+  padding: 5px;
+  /* border-bottom: 1px solid black; */
+}
+.mobile-tables .body span:first-child {
+  flex: 1;
+  /* border-bottom: 1px solid black; */
+}
+/* 
+.mobile-tables .body span:last-child {
+  flex: 1;
+  padding: 10px;
+  border-right: 1px solid white;
+  text-align: center !important;
+  min-width: max-content;
+}
+.mobile-tables .body span:first-child {
+  flex: 1;
+  border-right: 1px solid white;
+  text-align: left !important;
+} */
