@@ -69,6 +69,15 @@ const Results = () => {
       sortField === "JDYear"
     ) {
       return parseFloat(a[sortField]) - parseFloat(b[sortField]);
+    } else if (sortField === "Date") {
+      // Parse dates before comparison
+      const dateA = a.Date_Documented
+        ? new Date(a.Date_Documented)
+        : new Date("1970-01-01"); // Move empty dates to the start
+      const dateB = b.Date_Documented
+        ? new Date(b.Date_Documented)
+        : new Date("1970-01-01");
+      return dateB - dateA; // Reverse date order, newest first
     } else {
       return a[sortField].localeCompare(b[sortField]);
     }
@@ -143,6 +152,7 @@ const Results = () => {
             <MenuItem value="JDYear">JD Year</MenuItem>
             <MenuItem value="State">State</MenuItem>
             <MenuItem value="City">City</MenuItem>
+            <MenuItem value="Date">Date (Newest to Oldest)</MenuItem>
             <MenuItem value="Salary">Salary (Low to High)</MenuItem>
             <MenuItem value="Bonuses">Bonuses (Low to High)</MenuItem>
             <MenuItem value="Gender">Gender</MenuItem>
@@ -150,121 +160,119 @@ const Results = () => {
           </Select>
         </FormControl>
       </div>
-        <ul
-          class="tables"
+      <ul
+        class="tables"
+        style={{
+          listStyleType: "none",
+          padding: 0,
+          border: "1px solid black",
+          width: isMobile ? "100%" : "100%",
+          marginTop: isMobile ? "10px" : "0",
+        }}
+      >
+        <li
+          class="header"
           style={{
-            listStyleType: "none",
-            padding: 0,
-            border: "1px solid black",
-            width: isMobile ? "100%" : "100%",
-            marginTop: isMobile ? "10px" : "0",
+            backgroundColor: "black",
+            color: "white",
+            fontWeight: "bold",
+            display: "flex",
+            borderBottom: "1px solid black",
+            fontSize: isMobile ? "11px" : "14px",
+            textAlign: "center",
           }}
         >
-          <li
-            class="header"
-            style={{
-              backgroundColor: "black",
-              color: "white",
-              fontWeight: "bold",
-              display: "flex",
-              borderBottom: "1px solid black",
-              fontSize: isMobile ? "11px" : "14px",
-              textAlign: "center",
-            }}
-          >
-            {isMobile && (
-              <>
-                <span>JD Year</span>
-                <span>Practice Area</span>
-                <span>Title</span>
-                <span>Salary</span>
-                <span>City</span>
-              </>
-            )}
-            {!isMobile && (
-              <>
-                <span>JD Year</span>
-                <span>Practice Area</span>
-                <span>Title</span>
-                <span>Salary</span>
-                <span>Bonus</span>
-                <span>City</span>
-                <span>State</span>
-                <span>Gender</span>
-                <span>Date</span>
-              </>
-            )}
-          </li>
+          {isMobile && (
+            <>
+              <span>JD Year</span>
+              <span>Practice Area</span>
+              <span>Title</span>
+              <span>Salary</span>
+              <span>City</span>
+            </>
+          )}
+          {!isMobile && (
+            <>
+              <span>JD Year</span>
+              <span>Practice Area</span>
+              <span>Title</span>
+              <span>Salary</span>
+              <span>Bonus</span>
+              <span>City</span>
+              <span>State</span>
+              <span>Gender</span>
+              <span>Date</span>
+            </>
+          )}
+        </li>
 
-          {loading ? (
-            <div className="flex-center" style={{ height: "80px" }}>
-              <CircularProgress />
-            </div>
-          ) : (
-            sortedData.map((rowData, index) => (
-              <li
-                className="body"
-                key={index}
-                style={{
-                  backgroundColor: index % 2 === 0 ? "#f5f7f9" : "white",
-                  display: "flex",
-                  borderBottom: "1px solid black",
-                  color: "black",
-                  fontSize: isMobile ? "11px" : "14px",
-                }}
-              >
-                <span style={{ textAlign: "center" }}>{rowData.JDYear}</span>
-                <span style={{ textAlign: "left" }}>
-                  {rowData.PracticeArea}
-                </span>
-                <span style={{ textAlign: "left" }}>{rowData.Title}</span>
+        {loading ? (
+          <div className="flex-center" style={{ height: "80px" }}>
+            <CircularProgress />
+          </div>
+        ) : (
+          sortedData.map((rowData, index) => (
+            <li
+              className="body"
+              key={index}
+              style={{
+                backgroundColor: index % 2 === 0 ? "#f5f7f9" : "white",
+                display: "flex",
+                borderBottom: "1px solid black",
+                color: "black",
+                fontSize: isMobile ? "11px" : "14px",
+              }}
+            >
+              <span style={{ textAlign: "center" }}>{rowData.JDYear}</span>
+              <span style={{ textAlign: "left" }}>{rowData.PracticeArea}</span>
+              <span style={{ textAlign: "left" }}>{rowData.Title}</span>
+              <span style={{ textAlign: "right" }}>
+                {rowData.Salary.toLocaleString("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 0,
+                })}
+              </span>
+              {!isMobile && (
                 <span style={{ textAlign: "right" }}>
-                  {rowData.Salary.toLocaleString("en-US", {
+                  {rowData.Bonuses.toLocaleString("en-US", {
                     style: "currency",
                     currency: "USD",
                     minimumFractionDigits: 0,
                     maximumFractionDigits: 0,
                   })}
                 </span>
-                {!isMobile && (
+              )}
+              <span style={{ textAlign: "left" }}>{rowData.City}</span>
+              {!isMobile && (
+                <>
+                  <span style={{ textAlign: "left" }}>{rowData.State}</span>
+                  <span style={{ textAlign: "left" }}>{rowData.Gender}</span>
                   <span style={{ textAlign: "right" }}>
-                    {rowData.Bonuses.toLocaleString("en-US", {
-                      style: "currency",
-                      currency: "USD",
-                      minimumFractionDigits: 0,
-                      maximumFractionDigits: 0,
-                    })}
+                    {rowData.Date_Documented
+                      ? new Date(rowData.Date_Documented).toLocaleDateString(
+                          "en-US",
+                          {
+                            month: "2-digit",
+                            day: "2-digit",
+                            year: "numeric",
+                          }
+                        )
+                      : "-"}
                   </span>
-                )}
-                <span style={{ textAlign: "left" }}>{rowData.City}</span>
-                {!isMobile && (
-                  <>
-                    <span style={{ textAlign: "left" }}>{rowData.State}</span>
-                    <span style={{ textAlign: "left" }}>{rowData.Gender}</span>
-                    <span style={{ textAlign: "right" }}>
-                      {rowData.Date_Documented
-                        ? new Date(rowData.Date_Documented).toLocaleDateString(
-                            "en-US",
-                            {
-                              month: "2-digit",
-                              day: "2-digit",
-                              year: "numeric",
-                            }
-                          )
-                        : "-"}
-                    </span>
-                  </>
-                )}
-              </li>
-            ))
-          )}
-          {!loading && sortedData.length === 0 && (
-            <li style={{ padding: "10px 0", color: "black", fontSize: "14px" }}>
-              No Data found
+                </>
+              )}
             </li>
-          )}
-        </ul>
-      </div>
+          ))
+        )}
+        {!loading && sortedData.length === 0 && (
+          <li style={{ padding: "10px 0", color: "black", fontSize: "14px" }}>
+            No Data found
+          </li>
+        )}
+      </ul>
+    </div>
   );
 };
 

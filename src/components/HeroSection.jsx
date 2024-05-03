@@ -23,6 +23,7 @@ export const Subtitle = styled("p")({
   fontSize: "1.1rem",
   marginBottom: "30px",
   maxWidth: "650px",
+  lineHeight: "28px",
 });
 
 function HeroSection() {
