@@ -150,71 +150,7 @@ const Results = () => {
           </Select>
         </FormControl>
       </div>
-      {isMobile ? (
-        <div class="mobile-table">
-          <ul class="header">
-            <li>JD Year</li>
-            <li>Practice Area</li>
-            <li>Title</li>
-            <li>Salary</li>
-            <li>Bonus</li>
-            <li>City</li>
-            <li>State</li>
-            <li>Gender</li>
-            <li>Date</li>
-          </ul>
-          <ul class="body">
-            {loading ? (
-              <div className="flex-center" style={{ height: "80px" }}>
-                <CircularProgress />
-              </div>
-            ) : (
-              sortedData.map((rowData, index) => (
-                <li key={index} style={{
-                  backgroundColor: index % 2 === 0 ? "#f5f7f9" : "white",
-
-                }}>
-                  <span>{rowData.JDYear}</span>
-                  <span>{rowData.PracticeArea}</span>
-                  <span>{rowData.Title}</span>
-                  <span>
-                    {rowData.Salary.toLocaleString("en-US", {
-                      style: "currency",
-                      currency: "USD",
-                      minimumFractionDigits: 0,
-                      maximumFractionDigits: 0,
-                    })}
-                  </span>
-                  <span>
-                    {rowData.Bonuses.toLocaleString("en-US", {
-                      style: "currency",
-                      currency: "USD",
-                      minimumFractionDigits: 0,
-                      maximumFractionDigits: 0,
-                    })}
-                  </span>
-                  <span>{rowData.City}</span>
-                  <span>{rowData.State}</span>
-                  <span>{rowData.Gender}</span>
-                  <span>
-                    {rowData.Date_Documented
-                      ? new Date(rowData.Date_Documented).toLocaleDateString(
-                          "en-US",
-                          {
-                            month: "2-digit",
-                            day: "2-digit",
-                            year: "numeric",
-                          }
-                        )
-                      : "-"}
-                  </span>
-                </li>
-              ))
-            )}
-            {!loading && sortedData.length === 0 && <li>No Data found</li>}
-          </ul>
-        </div>
-      ) : (
+      <div style={{ overflowY: "auto", maxHeight: "100vh", width: "100%" }}>
         <ul
           class="tables"
           style={{
@@ -233,19 +169,32 @@ const Results = () => {
               fontWeight: "bold",
               display: "flex",
               borderBottom: "1px solid black",
-              fontSize: isMobile ? "10px" : "14px",
+              fontSize: isMobile ? "11px" : "14px",
               textAlign: "center",
             }}
           >
-            <span>JD Year</span>
-            <span>Practice Area</span>
-            <span>Title</span>
-            <span>Salary</span>
-            <span>Bonus</span>
-            <span>City</span>
-            <span>State</span>
-            <span>Gender</span>
-            <span>Date</span>
+            {isMobile && (
+              <>
+                <span>JD Year</span>
+                <span>Practice Area</span>
+                <span>Title</span>
+                <span>Salary</span>
+                <span>City</span>
+              </>
+            )}
+            {!isMobile && (
+              <>
+                <span>JD Year</span>
+                <span>Practice Area</span>
+                <span>Title</span>
+                <span>Salary</span>
+                <span>Bonus</span>
+                <span>City</span>
+                <span>State</span>
+                <span>Gender</span>
+                <span>Date</span>
+              </>
+            )}
           </li>
 
           {loading ? (
@@ -262,19 +211,15 @@ const Results = () => {
                   display: "flex",
                   borderBottom: "1px solid black",
                   color: "black",
-                  fontSize: isMobile ? "10px" : "14px",
+                  fontSize: isMobile ? "11px" : "14px",
                 }}
               >
-                <span style={{ flex: 2, textAlign: "center" }}>
-                  {rowData.JDYear}
-                </span>
-                <span style={{ flex: 2, textAlign: "left" }}>
+                <span style={{ textAlign: "center" }}>{rowData.JDYear}</span>
+                <span style={{ textAlign: "left" }}>
                   {rowData.PracticeArea}
                 </span>
-                <span style={{ flex: 2, textAlign: "left" }}>
-                  {rowData.Title}
-                </span>
-                <span style={{ flex: 2, textAlign: "right" }}>
+                <span style={{ textAlign: "left" }}>{rowData.Title}</span>
+                <span style={{ textAlign: "right" }}>
                   {rowData.Salary.toLocaleString("en-US", {
                     style: "currency",
                     currency: "USD",
@@ -282,35 +227,35 @@ const Results = () => {
                     maximumFractionDigits: 0,
                   })}
                 </span>
-                <span style={{ flex: 2, textAlign: "right" }}>
-                  {rowData.Bonuses.toLocaleString("en-US", {
-                    style: "currency",
-                    currency: "USD",
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0,
-                  })}
-                </span>
-                <span style={{ flex: 2, textAlign: "left" }}>
-                  {rowData.City}
-                </span>
-                <span style={{ flex: 2, textAlign: "left" }}>
-                  {rowData.State}
-                </span>
-                <span style={{ flex: 2, textAlign: "left" }}>
-                  {rowData.Gender}
-                </span>
-                <span style={{ flex: 2, textAlign: "right" }}>
-                  {rowData.Date_Documented
-                    ? new Date(rowData.Date_Documented).toLocaleDateString(
-                        "en-US",
-                        {
-                          month: "2-digit",
-                          day: "2-digit",
-                          year: "numeric",
-                        }
-                      )
-                    : "-"}
-                </span>
+                {!isMobile && (
+                  <span style={{ textAlign: "right" }}>
+                    {rowData.Bonuses.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                    })}
+                  </span>
+                )}
+                <span style={{ textAlign: "left" }}>{rowData.City}</span>
+                {!isMobile && (
+                  <>
+                    <span style={{ textAlign: "left" }}>{rowData.State}</span>
+                    <span style={{ textAlign: "left" }}>{rowData.Gender}</span>
+                    <span style={{ textAlign: "right" }}>
+                      {rowData.Date_Documented
+                        ? new Date(rowData.Date_Documented).toLocaleDateString(
+                            "en-US",
+                            {
+                              month: "2-digit",
+                              day: "2-digit",
+                              year: "numeric",
+                            }
+                          )
+                        : "-"}
+                    </span>
+                  </>
+                )}
               </li>
             ))
           )}
@@ -320,7 +265,7 @@ const Results = () => {
             </li>
           )}
         </ul>
-      )}
+      </div>
     </div>
   );
 };
