@@ -51,8 +51,7 @@ const Results = () => {
         row.Salary.toString().toLowerCase().includes(keyword) ||
         row.Bonuses.toString().toLowerCase().includes(keyword) ||
         row.Gender.toLowerCase().includes(keyword) ||
-        row.JDYear.toString().toLowerCase().includes(keyword) ||
-        row.Ethnicity.toLowerCase().includes(keyword)
+        row.JDYear.toString().toLowerCase().includes(keyword) 
     );
   });
 
@@ -161,7 +160,7 @@ const Results = () => {
         </FormControl>
       </div>
       <ul
-        class="tables"
+        className="tables"
         style={{
           listStyleType: "none",
           padding: 0,
@@ -171,7 +170,7 @@ const Results = () => {
         }}
       >
         <li
-          class="header"
+          className="header"
           style={{
             backgroundColor: "black",
             color: "white",
