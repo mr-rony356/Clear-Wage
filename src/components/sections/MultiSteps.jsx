@@ -229,7 +229,7 @@ function Modal({ open, onClose }) {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { addStepData } = useStepData();
   const [step, setStep] = useState(1);
-  const [showPopup, setShowPopup] = useState(true);
+  const [showPopup, setShowPopup] = useState(false);
   const [formData, setFormData] = useState({
     FirmName: "",
     FirmSize: "",

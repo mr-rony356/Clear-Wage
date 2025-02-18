@@ -65,9 +65,9 @@ function DrawerAppBar() {
             <ButtonStyled openModal={true} bgColor="white" nav={true}>
               Contribute Salary
             </ButtonStyled>
-            <ButtonStyled scrollToSection={true} bgColor="white" nav={true}>
+            {/* <ButtonStyled scrollToSection={true} bgColor="white" nav={true}>
               View Data
-            </ButtonStyled>
+            </ButtonStyled> */}
           </List>
         </Toolbar>
       </AppBar>
