@@ -241,9 +241,9 @@ const Results = () => {
               {isMobile && (
                 <>
                   <span>JD Year</span>
+                  <span>Salary</span>
                   <span>Practice Area</span>
                   <span>Title</span>
-                  <span>Salary</span>
                   <span>City</span>
                 </>
               )}

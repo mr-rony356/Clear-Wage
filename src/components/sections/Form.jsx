@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/system";
 import { Subtitle, Title } from "../HeroSection";
@@ -18,6 +18,24 @@ const MiuiSection = styled(Box)({
 function Form() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [totalEntries, setTotalEntries] = useState(0);
+
+  useEffect(() => {
+    const fetchTotalEntries = async () => {
+      try {
+        const response = await fetch(
+          "https://script.google.com/macros/s/AKfycbxWJzD7pTYLpFvgi_Y7PuLhKCpbUAW9FR_TLupd-HoIkJVqcknqw7KRfrWf3O5XxsU/exec"
+        );
+        const data = await response.json();
+        setTotalEntries(data.length);
+      } catch (error) {
+        console.error("Error fetching total entries:", error);
+        setTotalEntries(1000); // Fallback number if fetch fails
+      }
+    };
+
+    fetchTotalEntries();
+  }, []);
 
   const handleContributionStatus = () => {
     localStorage.setItem("hasContributed", "true");
@@ -37,13 +55,14 @@ function Form() {
         <Title> See How Your Salary Stacks Up Against Other Attorneys</Title>
         <div className="flex-center">
           <Subtitle style={{ maxWidth: "650px" }}>
-            [1000+] attorneys have shared their salaries to create the most
-            powerful attorney salary database. But there's a catch—you need to
-            contribute to see the data. <br /> <br /> It only takes seconds.
-            Your contribution is 100% anonymous. No names, no tracking—just the
-            raw numbers that help everyone. And the knowledge you gain could
-            mean thousands more in your next paycheck. <br /> <br /> Don't be
-            left in the dark—Enter your salary now and unlock instant access.
+            [{totalEntries.toLocaleString()}+] attorneys have shared their
+            salaries to create the most powerful attorney salary database. But
+            there's a catch—you need to contribute to see the data. <br />{" "}
+            <br /> It only takes seconds. Your contribution is 100% anonymous.
+            No names, no tracking—just the raw numbers that help everyone. And
+            the knowledge you gain could mean thousands more in your next
+            paycheck. <br /> <br /> Don't be left in the dark—Enter your salary
+            now and unlock instant access.
           </Subtitle>
         </div>
       </Box>

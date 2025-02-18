@@ -77,9 +77,28 @@ const FORM_STEPS = [
       },
       { value: "Corporate", label: "Corporate" },
       { value: "Civil Litigation", label: "Civil Litigation" },
-      // ... add other practice areas
+      { value: "Commercial  Litigation", label: "Commercial Litigation" },
+      { value: "Banking", label: "Banking" },
+      { value: "Insurance ", label: "Insurance " },
+      { value: "Bankruptcy", label: "Bankruptcy" },
+      { value: "Education", label: "Education" },
+      { value: "Energy", label: "Energy" },
+      { value: "Environment", label: "Environment" },
+      { value: "Erisa", label: "ERISA" },
+      { value: "General Practice", label: "General Practice" },
+      { value: "Government", label: "Government" },
+      { value: "Healthcare", label: "Healthcare" },
+      { value: "Immigration", label: "Immigration" },
+      { value: "Information Technology", label: "Information Technology" },
+      { value: "Intellection Property", label: "Intellection Property" },
+      { value: "Labor & Employment", label: "Labor & Employment" },
+      { value: "Real Estate", label: "Real Estate" },
+      { value: "Tax", label: "Tax" },
+      { value: "Transportation", label: "Transportation" },
+      { value: "Trusts & Estates", label: "Trusts & Estates" },
       { value: "Other", label: "Other" },
     ],
+
     conditionalField: {
       when: "Other",
       show: {
@@ -144,7 +163,7 @@ const FORM_STEPS = [
         value: "Mid-size (21-100 attorneys)",
         label: "Mid-size (21-100 attorneys)",
       },
-      { value: "Large (100+ attorneys)", label: "Large (100+ attorneys)" },
+      { value: "Large (101+ attorneys)", label: "Large (101+ attorneys)" },
       { value: "Am100", label: "Am100" },
       { value: "Am200", label: "Am200" },
     ],
@@ -268,7 +287,8 @@ function Modal({ open, onClose }) {
   };
 
   const handleSubmit = async () => {
-    const scriptUrl = "https://script.google.com/macros/s/AKfycbxWJzD7pTYLpFvgi_Y7PuLhKCpbUAW9FR_TLupd-HoIkJVqcknqw7KRfrWf3O5XxsU/exec";
+    const scriptUrl =
+      "https://script.google.com/macros/s/AKfycbxWJzD7pTYLpFvgi_Y7PuLhKCpbUAW9FR_TLupd-HoIkJVqcknqw7KRfrWf3O5XxsU/exec";
     const formDataAllSteps = { ...formData };
 
     if (formData.PracticeArea === "Other") {
@@ -354,9 +374,7 @@ function Modal({ open, onClose }) {
                   : "Skip"}
               </Button>
             ) : (
-              <Button onClick={handleSubmit}>
-                Submit & Unlock Salary Data →
-              </Button>
+              <Button onClick={handleSubmit}>Submit</Button>
             )}
           </DialogActions>
         </Dialog>
