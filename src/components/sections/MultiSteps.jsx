@@ -242,7 +242,9 @@ function Modal({ open, onClose }) {
     Salary: "",
     Bonuses: "",
     Gender: "",
-    Date_Documented: new Date().toLocaleDateString(),
+    Date_Documented: new Date().toLocaleDateString("en-US", {
+      timeZone: "UTC",
+    }),
   });
   const [userFormData, setUserFormData] = useState({
     firstName: "",
@@ -266,7 +268,7 @@ function Modal({ open, onClose }) {
   };
 
   const handleSubmit = async () => {
-    const scriptUrl = "YOUR_GOOGLE_SCRIPT_URL";
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbxWJzD7pTYLpFvgi_Y7PuLhKCpbUAW9FR_TLupd-HoIkJVqcknqw7KRfrWf3O5XxsU/exec";
     const formDataAllSteps = { ...formData };
 
     if (formData.PracticeArea === "Other") {
