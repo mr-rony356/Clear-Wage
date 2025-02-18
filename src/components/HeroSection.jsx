@@ -32,6 +32,10 @@ function HeroSection() {
 
   const handleContributionStatus = () => {
     localStorage.setItem("hasContributed", "true");
+    window.scrollTo({
+      top: document.getElementById("last").offsetTop,
+      behavior: "smooth",
+    });
   };
 
   return (

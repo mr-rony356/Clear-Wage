@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useStepData } from "../../context/stepsData";
 import {
   useMediaQuery,
@@ -24,12 +24,36 @@ const Results = () => {
     // Get initial value from localStorage, default to false if not found
     return localStorage.getItem("hasContributed") === "true";
   });
+  const lastSectionRef = useRef(null);
+  const [shouldReload, setShouldReload] = useState(0);
 
   // Update localStorage whenever hasContributed changes
-  const handleContributionStatus = (status) => {
-    setHasContributed(status);
-    localStorage.setItem("hasContributed", status);
-  };
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Force re-check of localStorage value
+            setHasContributed(
+              localStorage.getItem("hasContributed") === "true"
+            );
+            setShouldReload((prev) => prev + 1);
+          }
+        });
+      },
+      { threshold: 0.1 } // Trigger when 10% of the element is visible
+    );
+
+    if (lastSectionRef.current) {
+      observer.observe(lastSectionRef.current);
+    }
+
+    return () => {
+      if (lastSectionRef.current) {
+        observer.unobserve(lastSectionRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -97,44 +121,22 @@ const Results = () => {
   return (
     <div
       id="last"
-      style={{
-        position: "relative",
-        display: "flex",
-        flexDirection: "column",
-        gap: "20px",
-        alignItems: "center",
-        textAlign: "center",
-        margin: isMobile ? "20px 5px" : "50px ",
-      }}
+      ref={lastSectionRef}
     >
       {!hasContributed ? (
-        <div style={{ textAlign: "center", width: "100%" }}>
-          <button
-            onClick={() => handleContributionStatus(true)}
-            style={{
-              fontSize: "20px",
-              color: "white",
-              border: "2px solid black",
-              backgroundColor: "black",
-              padding: "10px 35px",
-              cursor: "pointer",
-              margin: "20px",
-              transition: "background-color 0.3s, color 0.3s",
-            }}
-            onMouseOver={(e) => {
-              e.target.style.backgroundColor = "white";
-              e.target.style.color = "black";
-            }}
-            onMouseOut={(e) => {
-              e.target.style.backgroundColor = "black";
-              e.target.style.color = "white";
-            }}
-          >
-            I already added my salary →
-          </button>
-        </div>
+        <div style={{ textAlign: "center", width: "100%" }}></div>
       ) : (
-        <>
+        <div
+          style={{
+            position: "relative",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            textAlign: "center",
+            gap: "20px",
+            margin: isMobile ? "20px 5px" : "50px ",
+          }}
+        >
           <Typography sx={{ fontSize: "14px", color: "black" }}>
             Separate keywords by commas to narrow your search <br />
             <span style={{ fontSize: "10px" }}>
@@ -339,7 +341,7 @@ const Results = () => {
               </li>
             )}
           </ul>
-        </>
+        </div>
       )}
     </div>
   );

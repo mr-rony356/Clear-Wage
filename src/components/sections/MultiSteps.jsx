@@ -299,6 +299,10 @@ function Modal({ open, onClose }) {
       );
       setShowPopup(false);
       onClose();
+      window.scrollTo({
+        top: document.getElementById("last").offsetTop,
+        behavior: "smooth",
+      });
     } catch (error) {
       console.error("Error sending email:", error);
     }
