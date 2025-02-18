@@ -6,7 +6,7 @@ import { useTheme, useMediaQuery, Button } from "@mui/material";
 import ButtonStyled from "../ButtonWrapper ";
 
 const MiuiSection = styled(Box)({
-  background: "#004225",
+  background: "#022124",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -55,9 +55,8 @@ function Form() {
         <Title> See How Your Salary Stacks Up Against Other Attorneys</Title>
         <div className="flex-center">
           <Subtitle style={{ maxWidth: "650px" }}>
-            [{totalEntries.toLocaleString()}+] attorneys have shared their
-            salaries to create the most powerful attorney salary database. But
-            there's a catch—you need to contribute to see the data. <br />{" "}
+            {totalEntries.toLocaleString()} attorneys (and counting) have shared
+            their salaries to create the most powerful attorney salary database.
             <br /> It only takes seconds. Your contribution is 100% anonymous.
             No names, no tracking—just the raw numbers that help everyone. And
             the knowledge you gain could mean thousands more in your next
