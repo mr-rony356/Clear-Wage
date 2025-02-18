@@ -7,6 +7,7 @@ import {
   TextField,
   Select,
   MenuItem,
+  Typography,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { FormControl, InputLabel } from "@mui/material";
@@ -19,6 +20,17 @@ const Results = () => {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortField, setSortField] = useState(""); // Define sortField state
+  const [hasContributed, setHasContributed] = useState(() => {
+    // Get initial value from localStorage, default to false if not found
+    return localStorage.getItem("hasContributed") === "true";
+  });
+
+  // Update localStorage whenever hasContributed changes
+  const handleContributionStatus = (status) => {
+    setHasContributed(status);
+    localStorage.setItem("hasContributed", status);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -51,7 +63,7 @@ const Results = () => {
         row.Salary.toString().toLowerCase().includes(keyword) ||
         row.Bonuses.toString().toLowerCase().includes(keyword) ||
         row.Gender.toLowerCase().includes(keyword) ||
-        row.JDYear.toString().toLowerCase().includes(keyword) 
+        row.JDYear.toString().toLowerCase().includes(keyword)
     );
   });
 
@@ -95,182 +107,240 @@ const Results = () => {
         margin: isMobile ? "20px 5px" : "50px ",
       }}
     >
-      <div style={{ width: isMobile ? "80%" : "30%", position: "relative" }}>
-        <TextField
-          fullWidth
-          placeholder="Search..."
-          value={searchQuery}
-          size="small"
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <SearchIcon
-          sx={{
-            color: "black",
-            position: "absolute",
-            right: "2%",
-            top: "8px",
-          }}
-        ></SearchIcon>
-      </div>
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "end",
-          position: "relative",
-          height: "30px",
-        }}
-      >
-        <FormControl
-          size="small"
-          sx={{
-            width: isMobile ? "25%" : "120px",
-            position: "absolute",
-            top: "0px",
-            right: "0px",
-          }}
-        >
-          <InputLabel id="demo-simple-select-label">Filter By</InputLabel>
-          <Select
-            value={sortField}
-            onChange={(e) => setSortField(e.target.value)}
-            name="sortField"
-            label="Sort By"
-            size="small"
-            labelId="demo-simple-select-label"
-            sx={{
-              color: "black",
+      {!hasContributed ? (
+        <div style={{ textAlign: "center", width: "100%" }}>
+          <button
+            onClick={() => handleContributionStatus(true)}
+            style={{
+              fontSize: "20px",
+              color: "white",
+              border: "2px solid black",
+              backgroundColor: "black",
+              padding: "10px 35px",
+              cursor: "pointer",
+              margin: "20px",
+              transition: "background-color 0.3s, color 0.3s",
             }}
-            inputProps={{
-              style: { color: "black" }, // Set the color of the placeholder text
+            onMouseOver={(e) => {
+              e.target.style.backgroundColor = "white";
+              e.target.style.color = "black";
+            }}
+            onMouseOut={(e) => {
+              e.target.style.backgroundColor = "black";
+              e.target.style.color = "white";
             }}
           >
-            <MenuItem value="">None</MenuItem>
-            <MenuItem value="Title">Title</MenuItem>
-            <MenuItem value="PracticeArea">Practice Area</MenuItem>
-            <MenuItem value="JDYear">JD Year</MenuItem>
-            <MenuItem value="State">State</MenuItem>
-            <MenuItem value="City">City</MenuItem>
-            <MenuItem value="Date">Date (Newest to Oldest)</MenuItem>
-            <MenuItem value="Salary">Salary (Low to High)</MenuItem>
-            <MenuItem value="Bonuses">Bonuses (Low to High)</MenuItem>
-            <MenuItem value="Gender">Gender</MenuItem>
-            {/* Add more sorting options if needed */}
-          </Select>
-        </FormControl>
-      </div>
-      <ul
-        className="tables"
-        style={{
-          listStyleType: "none",
-          padding: 0,
-          border: "1px solid black",
-          width: isMobile ? "100%" : "100%",
-          marginTop: isMobile ? "10px" : "0",
-        }}
-      >
-        <li
-          className="header"
-          style={{
-            backgroundColor: "black",
-            color: "white",
-            fontWeight: "bold",
-            display: "flex",
-            borderBottom: "1px solid black",
-            fontSize: isMobile ? "11px" : "14px",
-            textAlign: "center",
-          }}
-        >
-          {isMobile && (
-            <>
-              <span>JD Year</span>
-              <span>Practice Area</span>
-              <span>Title</span>
-              <span>Salary</span>
-              <span>City</span>
-            </>
-          )}
-          {!isMobile && (
-            <>
-              <span>JD Year</span>
-              <span>Practice Area</span>
-              <span>Title</span>
-              <span>Salary</span>
-              <span>Bonus</span>
-              <span>City</span>
-              <span>State</span>
-              <span>Gender</span>
-              <span>Date</span>
-            </>
-          )}
-        </li>
+            I already added my salary →
+          </button>
+        </div>
+      ) : (
+        <>
+          <Typography sx={{ fontSize: "14px", color: "black" }}>
+            Separate keywords by commas to narrow your search <br />
+            <span style={{ fontSize: "10px" }}>
+              For Example: 2018, Commercial Litigation, Associate
+            </span>
+          </Typography>
 
-        {loading ? (
-          <div className="flex-center" style={{ height: "80px" }}>
-            <CircularProgress />
-          </div>
-        ) : (
-          sortedData.map((rowData, index) => (
-            <li
-              className="body"
-              key={index}
-              style={{
-                backgroundColor: index % 2 === 0 ? "#f5f7f9" : "white",
-                display: "flex",
-                borderBottom: "1px solid black",
+          <div
+            style={{ width: isMobile ? "80%" : "30%", position: "relative" }}
+          >
+            <TextField
+              fullWidth
+              placeholder="Search..."
+              value={searchQuery}
+              size="small"
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <SearchIcon
+              sx={{
                 color: "black",
-                fontSize: isMobile ? "11px" : "14px",
+                position: "absolute",
+                right: "2%",
+                top: "8px",
+              }}
+            ></SearchIcon>
+          </div>
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "end",
+              position: "relative",
+              height: "30px",
+            }}
+          >
+            <FormControl
+              size="small"
+              sx={{
+                width: isMobile ? "25%" : "120px",
+                position: "absolute",
+                top: "0px",
+                right: "0px",
               }}
             >
-              <span style={{ textAlign: "center" }}>{rowData.JDYear}</span>
-              <span style={{ textAlign: "left" }}>{rowData.PracticeArea}</span>
-              <span style={{ textAlign: "left" }}>{rowData.Title}</span>
-              <span style={{ textAlign: "right" }}>
-                {rowData.Salary.toLocaleString("en-US", {
-                  style: "currency",
-                  currency: "USD",
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 0,
-                })}
-              </span>
-              {!isMobile && (
-                <span style={{ textAlign: "right" }}>
-                  {rowData.Bonuses.toLocaleString("en-US", {
-                    style: "currency",
-                    currency: "USD",
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0,
-                  })}
-                </span>
+              <InputLabel id="demo-simple-select-label">Filter By</InputLabel>
+              <Select
+                value={sortField}
+                onChange={(e) => setSortField(e.target.value)}
+                name="sortField"
+                label="Sort By"
+                size="small"
+                labelId="demo-simple-select-label"
+                sx={{
+                  color: "black",
+                }}
+                inputProps={{
+                  style: { color: "black" }, // Set the color of the placeholder text
+                }}
+              >
+                <MenuItem value="">None</MenuItem>
+                <MenuItem value="Title">Title</MenuItem>
+                <MenuItem value="PracticeArea">Practice Area</MenuItem>
+                <MenuItem value="JDYear">JD Year</MenuItem>
+                <MenuItem value="State">State</MenuItem>
+                <MenuItem value="City">City</MenuItem>
+                <MenuItem value="Date">Date (Newest to Oldest)</MenuItem>
+                <MenuItem value="Salary">Salary (Low to High)</MenuItem>
+                <MenuItem value="Bonuses">Bonuses (Low to High)</MenuItem>
+                <MenuItem value="Gender">Gender</MenuItem>
+                {/* Add more sorting options if needed */}
+              </Select>
+            </FormControl>
+          </div>
+          {isMobile && (
+            <Typography sx={{ fontSize: "12px", color: "black" }}>
+              Shift your phone horizontally to view full data.
+            </Typography>
+          )}
+
+          <ul
+            className="tables"
+            style={{
+              listStyleType: "none",
+              padding: 0,
+              border: "1px solid black",
+              width: isMobile ? "100%" : "100%",
+              marginTop: isMobile ? "10px" : "0",
+            }}
+          >
+            <li
+              className="header"
+              style={{
+                backgroundColor: "black",
+                color: "white",
+                fontWeight: "bold",
+                display: "flex",
+                borderBottom: "1px solid black",
+                fontSize: isMobile ? "11px" : "14px",
+                textAlign: "center",
+              }}
+            >
+              {isMobile && (
+                <>
+                  <span>JD Year</span>
+                  <span>Practice Area</span>
+                  <span>Title</span>
+                  <span>Salary</span>
+                  <span>City</span>
+                </>
               )}
-              <span style={{ textAlign: "left" }}>{rowData.City}</span>
               {!isMobile && (
                 <>
-                  <span style={{ textAlign: "left" }}>{rowData.State}</span>
-                  <span style={{ textAlign: "left" }}>{rowData.Gender}</span>
-                  <span style={{ textAlign: "right" }}>
-                    {rowData.Date_Documented
-                      ? new Date(rowData.Date_Documented).toLocaleDateString(
-                          "en-US",
-                          {
-                            month: "2-digit",
-                            day: "2-digit",
-                            year: "numeric",
-                          }
-                        )
-                      : "-"}
-                  </span>
+                  <span>JD Year</span>
+                  <span>Salary</span>
+                  <span>Bonus</span>
+                  <span>Practice Area</span>
+                  <span>Firm Size</span>
+                  <span>Title</span>
+                  <span>City</span>
+                  <span>State</span>
+                  <span>Gender</span>
+                  <span>Date</span>
                 </>
               )}
             </li>
-          ))
-        )}
-        {!loading && sortedData.length === 0 && (
-          <li style={{ padding: "10px 0", color: "black", fontSize: "14px" }}>
-            No Data found
-          </li>
-        )}
-      </ul>
+
+            {loading ? (
+              <div className="flex-center" style={{ height: "80px" }}>
+                <CircularProgress />
+              </div>
+            ) : (
+              sortedData.map((rowData, index) => (
+                <li
+                  className="body"
+                  key={index}
+                  style={{
+                    backgroundColor: index % 2 === 0 ? "#f5f7f9" : "white",
+                    display: "flex",
+                    borderBottom: "1px solid black",
+                    color: "black",
+                    fontSize: isMobile ? "11px" : "14px",
+                  }}
+                >
+                  <span style={{ textAlign: "center" }}>{rowData.JDYear}</span>
+                  <span style={{ textAlign: "right" }}>
+                    {rowData.Salary.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                    })}
+                  </span>
+                  {!isMobile && (
+                    <span style={{ textAlign: "right" }}>
+                      {rowData.Bonuses.toLocaleString("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                      })}
+                    </span>
+                  )}
+
+                  <span style={{ textAlign: "left" }}>
+                    {rowData.PracticeArea}
+                  </span>
+                  {!isMobile && (
+                    <span style={{ textAlign: "center" }}>
+                      {rowData.FirmSize}
+                    </span>
+                  )}
+
+                  <span style={{ textAlign: "left" }}>{rowData.Title}</span>
+                  <span style={{ textAlign: "left" }}>{rowData.City}</span>
+                  {!isMobile && (
+                    <>
+                      <span style={{ textAlign: "left" }}>{rowData.State}</span>
+                      <span style={{ textAlign: "left" }}>
+                        {rowData.Gender}
+                      </span>
+                      <span style={{ textAlign: "right" }}>
+                        {rowData.Date_Documented
+                          ? new Date(
+                              rowData.Date_Documented
+                            ).toLocaleDateString("en-US", {
+                              month: "2-digit",
+                              day: "2-digit",
+                              year: "numeric",
+                            })
+                          : "-"}
+                      </span>
+                    </>
+                  )}
+                </li>
+              ))
+            )}
+            {!loading && sortedData.length === 0 && (
+              <li
+                style={{ padding: "10px 0", color: "black", fontSize: "14px" }}
+              >
+                No Data found
+              </li>
+            )}
+          </ul>
+        </>
+      )}
     </div>
   );
 };

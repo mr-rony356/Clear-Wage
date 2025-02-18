@@ -96,3 +96,12 @@ body {
     padding: 15px 5px;
   }
 }
+
+.css-ypiqx9-MuiDialogContent-root {
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  -webkit-overflow-scrolling: touch;
+  overflow-y:visible !important;
+  padding: 20px 24px;
+}

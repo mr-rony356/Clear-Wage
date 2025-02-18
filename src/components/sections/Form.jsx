@@ -6,7 +6,7 @@ import { useTheme, useMediaQuery, Button } from "@mui/material";
 import ButtonStyled from "../ButtonWrapper ";
 
 const MiuiSection = styled(Box)({
-  background: "black",
+  background: "#004225",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -19,6 +19,10 @@ function Form() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
+  const handleContributionStatus = () => {
+    localStorage.setItem("hasContributed", "true");
+  };
+
   return (
     <MiuiSection>
       <Box
@@ -26,25 +30,33 @@ function Form() {
           maxWidth: isMobile ? "95%" : "70%",
         }}
       >
-        <Title>
-          {" "}
-          Please Contribute Your Information. <br />
-          It’s Anonymous.
-        </Title>
+        <Title> See How Your Salary Stacks Up Against Other Attorneys</Title>
         <div className="flex-center">
           <Subtitle style={{ maxWidth: "650px" }}>
-            Together, we can crowdsource the ultimate salary transparency
-            resource for attorneys. However, this data source is only as good as
-            your contributions, so please ensure accuracy when submitting (your
-            entry is anonymous). By clicking ‘submit,’ you consent to having
-            your information included anonymously in the database below for
-            others to see.
+            [1000+] attorneys have shared their salaries to create the most
+            powerful attorney salary database. But there's a catch—you need to
+            contribute to see the data. <br /> <br /> It only takes seconds.
+            Your contribution is 100% anonymous. No names, no tracking—just the
+            raw numbers that help everyone. And the knowledge you gain could
+            mean thousands more in your next paycheck. <br /> <br /> Don't be
+            left in the dark—Enter your salary now and unlock instant access.
           </Subtitle>
         </div>
       </Box>
       <ButtonStyled openModal={true} bgColor="#b59658">
-        Contribute Salary
+        Unlock Salary Data Now →
       </ButtonStyled>
+      <div
+        onClick={handleContributionStatus}
+        style={{
+          fontSize: ".8rem",
+          fontWeight: "bold",
+          textDecoration: "underline",
+          cursor: "pointer",
+        }}
+      >
+        I already added my salary →
+      </div>
     </MiuiSection>
   );
 }

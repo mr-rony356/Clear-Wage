@@ -30,20 +30,38 @@ function HeroSection() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
+  const handleContributionStatus = () => {
+    localStorage.setItem("hasContributed", "true");
+  };
+
   return (
     <HeroWrapper>
-      <Title>Salary Transparency For Attorneys</Title>
+      <Title>
+        What Are Other Attorneys With <br /> Your Experience Making?
+      </Title>
       <div className="flex-center">
         <Subtitle style={{ maxWidth: isMobile ? "100%" : "70%" }}>
-          Empowering Attorneys with Real Salary Data to Compare Compensation
+          Add Your Anonymous Salary To Find Out!
         </Subtitle>
       </div>
       <ButtonStyled openModal={true} bgColor="#b59658">
-        Contribute Salary
+        Unlock Salary Data Now →
       </ButtonStyled>
-      <ButtonStyled scrollToSection={true} bgColor="white">
+      <div
+        onClick={handleContributionStatus}
+        style={{
+          fontSize: ".8rem",
+          fontWeight: "bold",
+          textDecoration: "underline",
+          cursor: "pointer",
+        }}
+      >
+        I already added my salary →
+      </div>
+
+      {/* <ButtonStyled scrollToSection={true} bgColor="white">
         View Data
-      </ButtonStyled>
+      </ButtonStyled> */}
     </HeroWrapper>
   );
 }
