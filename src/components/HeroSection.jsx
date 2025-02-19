@@ -15,6 +15,7 @@ const HeroWrapper = styled("div")(({ theme }) => ({
 export const Title = styled("h1")(({ theme }) => ({
   fontSize: theme.breakpoints.down("sm") ? "2.5rem" : "5rem",
   marginBottom: "20px",
+  marginTop: "40px",
   fontWeight: "900",
   fontFamily: "Freight Black, Times New Roman, Times, serif",
 }));

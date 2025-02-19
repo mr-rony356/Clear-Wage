@@ -1,12 +1,21 @@
-import React from 'react';
-import Home from './components/Home';
-import { StepDataProvider } from './context/stepsData'; // Importing StepDataProvider from your StepDataContext file
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./components/Home";
+import { StepDataProvider } from "./context/stepsData"; // Importing StepDataProvider from your StepDataContext file
+import PrivacyPolicy from "./components/Privacy";
 
 function App() {
   return (
-    <StepDataProvider> {/* Wrap your App component with the StepDataProvider */}
-      <Home />
-    </StepDataProvider>
+    <BrowserRouter>
+      <StepDataProvider>
+        {" "}
+        {/* Wrap your App component with the StepDataProvider */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        </Routes>
+      </StepDataProvider>
+    </BrowserRouter>
   );
 }
 
