@@ -41,8 +41,8 @@ const FORM_STEPS = [
     required: true,
     options: [
       ...Array.from({ length: 23 }, (_, index) => ({
-        value: (2023 - index).toString(),
-        label: (2023 - index).toString(),
+        value: (2024 - index).toString(),
+        label: (2024 - index).toString(),
       })),
       { value: "Before 2000", label: "Before 2000" },
     ],

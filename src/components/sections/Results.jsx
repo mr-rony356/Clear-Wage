@@ -220,13 +220,37 @@ const Results = () => {
                 label="JD Year"
               >
                 <MenuItem value="">All</MenuItem>
-                {["2025", "2024", "2023", "2022", "2021", "2020"].map(
-                  (year) => (
-                    <MenuItem key={year} value={year}>
-                      {year}
-                    </MenuItem>
-                  )
-                )}
+                {[
+                  "2024",
+                  "2023",
+                  "2022",
+                  "2021",
+                  "2020",
+                  "2019",
+                  "2018",
+                  "2017",
+                  "2016",
+                  "2015",
+                  "2014",
+                  "2013",
+                  "2012",
+                  "2011",
+                  "2010",
+                  "2009",
+                  "2008",
+                  "2007",
+                  "2006",
+                  "2005",
+                  "2004",
+                  "2003",
+                  "2002",
+                  "2001",
+                  "2000",
+                ].map((year) => (
+                  <MenuItem key={year} value={year}>
+                    {year}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
 
@@ -247,9 +271,33 @@ const Results = () => {
                 label="Practice Area"
               >
                 <MenuItem value="">All</MenuItem>
-                {getUniqueValues("PracticeArea").map((area) => (
-                  <MenuItem key={area} value={area}>
-                    {area}
+                {[
+                  "Insurance Defense Litigation",
+                  "Corporate",
+                  "Civil Litigation",
+                  "Commercial Litigation",
+                  "Banking",
+                  "Insurance",
+                  "Bankruptcy",
+                  "Education",
+                  "Energy",
+                  "Environment",
+                  "ERISA",
+                  "General Practice",
+                  "Government",
+                  "Healthcare",
+                  "Immigration",
+                  "Information Technology",
+                  "Intellection Property",
+                  "Labor & Employment",
+                  "Real Estate",
+                  "Tax",
+                  "Transportation",
+                  "Trusts & Estates",
+                  "Other",
+                ].map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
                   </MenuItem>
                 ))}
               </Select>
@@ -336,9 +384,9 @@ const Results = () => {
                 <>
                   <span>JD Year</span>
                   <span>Salary</span>
+                  <span>Bonus</span>
                   <span>Practice Area</span>
-                  <span>Title</span>
-                  <span>City</span>
+                  <span>Firm Size</span>
                 </>
               )}
               {!isMobile && (
@@ -383,28 +431,28 @@ const Results = () => {
                       maximumFractionDigits: 0,
                     })}
                   </span>
-                  {!isMobile && (
-                    <span style={{ textAlign: "right" }}>
-                      {rowData.Bonuses.toLocaleString("en-US", {
-                        style: "currency",
-                        currency: "USD",
-                        minimumFractionDigits: 0,
-                        maximumFractionDigits: 0,
-                      })}
-                    </span>
-                  )}
+                  <span style={{ textAlign: "right" }}>
+                    {rowData.Bonuses.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                    })}
+                  </span>
 
                   <span style={{ textAlign: "left" }}>
                     {rowData.PracticeArea}
                   </span>
-                  {!isMobile && (
-                    <span style={{ textAlign: "center" }}>
-                      {rowData.FirmSize}
-                    </span>
-                  )}
+                  <span style={{ textAlign: "center" }}>
+                    {rowData.FirmSize}
+                  </span>
 
-                  <span style={{ textAlign: "left" }}>{rowData.Title}</span>
-                  <span style={{ textAlign: "left" }}>{rowData.City}</span>
+                  {!isMobile && (
+                    <span style={{ textAlign: "left" }}>{rowData.Title}</span>
+                  )}
+                  {!isMobile && (
+                    <span style={{ textAlign: "left" }}>{rowData.City}</span>
+                  )}
                   {!isMobile && (
                     <>
                       <span style={{ textAlign: "left" }}>{rowData.State}</span>
