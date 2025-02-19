@@ -245,7 +245,7 @@ const Results = () => {
                   "2003",
                   "2002",
                   "2001",
-                  "2000",
+                  "Before 2000",
                 ].map((year) => (
                   <MenuItem key={year} value={year}>
                     {year}
