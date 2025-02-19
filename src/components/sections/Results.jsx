@@ -277,7 +277,7 @@ const Results = () => {
                   "Civil Litigation",
                   "Commercial Litigation",
                   "Corporate (Transactional)",
-                  "Education", 
+                  "Education",
                   "Energy",
                   "Environment",
                   "ERISA",
@@ -293,9 +293,9 @@ const Results = () => {
                   "Labor & Employment",
                   "Real Estate",
                   "Tax",
-                  "Transportation", 
+                  "Transportation",
                   "Trusts & Estates",
-                  "Other"
+                  "Other",
                 ].map((option) => (
                   <MenuItem key={option} value={option}>
                     {option}
@@ -318,7 +318,13 @@ const Results = () => {
                 label="Firm Size"
               >
                 <MenuItem value="">All</MenuItem>
-                {getUniqueValues("FirmSize").map((size) => (
+                {[
+                  "Boutique (1-20 attorneys)",
+                  "Mid-size (21-100 attorneys)",
+                  "Large (101+ attorneys)",
+                  "Am100",
+                  "Am200",
+                ].map((size) => (
                   <MenuItem key={size} value={size}>
                     {size}
                   </MenuItem>
