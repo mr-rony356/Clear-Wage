@@ -40,6 +40,13 @@ const Footer = () => {
         Have someone reach out to discuss opportunities
       </StyledLink>
       <br /> <br />
+      <StyledLink
+        href="/privacy-policy"
+        rel="noopener noreferrer"
+      >
+        Privacy Policy
+      </StyledLink>{" "}
+      <br /> <br />
       ©2025 ClearWage.co - All Rights Reserved
     </FooterWrapper>
   );

@@ -11,6 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useMediaQuery, useTheme } from "@mui/material";
 import ButtonStyled from "./ButtonWrapper ";
+import { Link } from "react-router-dom";
 
 const navItems = ["Contribute Salary", "View salaries"];
 
@@ -39,14 +40,16 @@ function DrawerAppBar() {
               fontSize: isMobile ? "25px" : "30px",
             }}
           >
-            CLEAR{" "}
-            <span
-              style={{
-                color: "green",
-              }}
-            >
-              WAGE
-            </span>
+            <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+              CLEAR{" "}
+              <span
+                style={{
+                  color: "green",
+                }}
+              >
+                WAGE
+              </span>
+            </Link>
           </Typography>
           <IconButton
             edge="start"

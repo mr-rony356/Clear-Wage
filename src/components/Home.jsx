@@ -11,8 +11,7 @@ function Home() {
         <>
             <MainSection>
                 <DrawerAppBar />
-                <HeroSection>
-                </HeroSection>
+                <HeroSection/>
             </MainSection>
 
             <Form></Form>
