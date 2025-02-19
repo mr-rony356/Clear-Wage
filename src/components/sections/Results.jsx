@@ -272,14 +272,12 @@ const Results = () => {
               >
                 <MenuItem value="">All</MenuItem>
                 {[
-                  "Insurance Defense Litigation",
-                  "Corporate",
+                  "Banking",
+                  "Bankruptcy",
                   "Civil Litigation",
                   "Commercial Litigation",
-                  "Banking",
-                  "Insurance",
-                  "Bankruptcy",
-                  "Education",
+                  "Corporate (Transactional)",
+                  "Education", 
                   "Energy",
                   "Environment",
                   "ERISA",
@@ -288,13 +286,16 @@ const Results = () => {
                   "Healthcare",
                   "Immigration",
                   "Information Technology",
+                  "Insurance",
+                  "Insurance Defense Litigation",
+                  "Insurance Plaintiffs",
                   "Intellection Property",
                   "Labor & Employment",
                   "Real Estate",
                   "Tax",
-                  "Transportation",
+                  "Transportation", 
                   "Trusts & Estates",
-                  "Other",
+                  "Other"
                 ].map((option) => (
                   <MenuItem key={option} value={option}>
                     {option}
