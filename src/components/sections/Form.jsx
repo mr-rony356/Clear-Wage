@@ -57,7 +57,7 @@ function Form() {
           <Subtitle style={{ maxWidth: "650px" }}>
             {totalEntries.toLocaleString()} attorneys (and counting) have shared
             their salaries to create the most powerful attorney salary database.
-            <br /> It only takes seconds. Your contribution is 100% anonymous.
+            <br /> <br /> It only takes seconds. Your contribution is 100% anonymous.
             No names, no tracking—just the raw numbers that help everyone. And
             the knowledge you gain could mean thousands more in your next
             paycheck. <br /> <br /> Don't be left in the dark—Enter your salary

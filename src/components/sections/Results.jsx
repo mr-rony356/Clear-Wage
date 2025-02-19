@@ -26,6 +26,12 @@ const Results = () => {
   });
   const lastSectionRef = useRef(null);
   const [shouldReload, setShouldReload] = useState(0);
+  const [filters, setFilters] = useState({
+    jdYear: "",
+    practiceArea: "",
+    firmSize: "",
+    dateOfEntry: "",
+  });
 
   // Update localStorage whenever hasContributed changes
   useEffect(() => {
@@ -71,12 +77,42 @@ const Results = () => {
 
     fetchData();
   }, [stepData]);
-  // Filter table data based on the search query
-  const filteredData = tableData.filter((row) => {
-    // Convert search query into an array of lowercase keywords
-    const keywords = searchQuery.toLowerCase().split(", ");
 
-    // Check if all keywords are present in any field of the row
+  // Add unique values for dropdown options
+  const getUniqueValues = (field) => {
+    return [...new Set(tableData.map((item) => item[field]))]
+      .filter(Boolean)
+      .sort();
+  };
+
+  // Modified filter logic to handle multiple filters
+  const filteredData = tableData.filter((row) => {
+    // First apply dropdown filters
+    const matchesFilters = Object.entries(filters).every(([key, value]) => {
+      if (!value) return true; // Skip empty filters
+
+      switch (key) {
+        case "jdYear":
+          return row.JDYear.toString() === value;
+        case "practiceArea":
+          return row.PracticeArea === value;
+        case "firmSize":
+          return row.FirmSize === value;
+        case "dateOfEntry":
+          return (
+            new Date(row.Date_Documented).getFullYear().toString() === value
+          );
+        default:
+          return true;
+      }
+    });
+
+    if (!matchesFilters) return false;
+
+    // Then apply search query filter
+    if (!searchQuery) return true;
+
+    const keywords = searchQuery.toLowerCase().split(", ");
     return keywords.every(
       (keyword) =>
         row.FirmName.toLowerCase().includes(keyword) ||
@@ -119,10 +155,7 @@ const Results = () => {
   });
 
   return (
-    <div
-      id="last"
-      ref={lastSectionRef}
-    >
+    <div id="last" ref={lastSectionRef}>
       {!hasContributed ? (
         <div style={{ textAlign: "center", width: "100%" }}></div>
       ) : (
@@ -165,48 +198,109 @@ const Results = () => {
           </div>
           <div
             style={{
-              width: "100%",
+              width: isMobile ? "80%" : "100%",
               display: "flex",
-              justifyContent: "end",
-              position: "relative",
-              height: "30px",
+              flexDirection: isMobile ? "column" : "row",
+              gap: "10px",
+              justifyContent: "center",
+              marginTop: "20px",
             }}
           >
+            {/* JD Year Filter */}
             <FormControl
               size="small"
-              sx={{
-                width: isMobile ? "25%" : "120px",
-                position: "absolute",
-                top: "0px",
-                right: "0px",
-              }}
+              sx={{ minWidth: isMobile ? "100%" : "200px" }}
             >
-              <InputLabel id="demo-simple-select-label">Filter By</InputLabel>
+              <InputLabel>JD Year</InputLabel>
               <Select
-                value={sortField}
-                onChange={(e) => setSortField(e.target.value)}
-                name="sortField"
-                label="Sort By"
-                size="small"
-                labelId="demo-simple-select-label"
-                sx={{
-                  color: "black",
-                }}
-                inputProps={{
-                  style: { color: "black" }, // Set the color of the placeholder text
-                }}
+                value={filters.jdYear}
+                onChange={(e) =>
+                  setFilters((prev) => ({ ...prev, jdYear: e.target.value }))
+                }
+                label="JD Year"
               >
-                <MenuItem value="">None</MenuItem>
-                <MenuItem value="Title">Title</MenuItem>
-                <MenuItem value="PracticeArea">Practice Area</MenuItem>
-                <MenuItem value="JDYear">JD Year</MenuItem>
-                <MenuItem value="State">State</MenuItem>
-                <MenuItem value="City">City</MenuItem>
-                <MenuItem value="Date">Date (Newest to Oldest)</MenuItem>
-                <MenuItem value="Salary">Salary (Low to High)</MenuItem>
-                <MenuItem value="Bonuses">Bonuses (Low to High)</MenuItem>
-                <MenuItem value="Gender">Gender</MenuItem>
-                {/* Add more sorting options if needed */}
+                <MenuItem value="">All</MenuItem>
+                {["2025", "2024", "2023", "2022", "2021", "2020"].map(
+                  (year) => (
+                    <MenuItem key={year} value={year}>
+                      {year}
+                    </MenuItem>
+                  )
+                )}
+              </Select>
+            </FormControl>
+
+            {/* Practice Area Filter */}
+            <FormControl
+              size="small"
+              sx={{ minWidth: isMobile ? "100%" : "200px" }}
+            >
+              <InputLabel>Practice Area</InputLabel>
+              <Select
+                value={filters.practiceArea}
+                onChange={(e) =>
+                  setFilters((prev) => ({
+                    ...prev,
+                    practiceArea: e.target.value,
+                  }))
+                }
+                label="Practice Area"
+              >
+                <MenuItem value="">All</MenuItem>
+                {getUniqueValues("PracticeArea").map((area) => (
+                  <MenuItem key={area} value={area}>
+                    {area}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            {/* Firm Size Filter */}
+            <FormControl
+              size="small"
+              sx={{ minWidth: isMobile ? "100%" : "200px" }}
+            >
+              <InputLabel>Firm Size</InputLabel>
+              <Select
+                value={filters.firmSize}
+                onChange={(e) =>
+                  setFilters((prev) => ({ ...prev, firmSize: e.target.value }))
+                }
+                label="Firm Size"
+              >
+                <MenuItem value="">All</MenuItem>
+                {getUniqueValues("FirmSize").map((size) => (
+                  <MenuItem key={size} value={size}>
+                    {size}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            {/* Date of Entry Filter */}
+            <FormControl
+              size="small"
+              sx={{ minWidth: isMobile ? "100%" : "200px" }}
+            >
+              <InputLabel>Date of Entry</InputLabel>
+              <Select
+                value={filters.dateOfEntry}
+                onChange={(e) =>
+                  setFilters((prev) => ({
+                    ...prev,
+                    dateOfEntry: e.target.value,
+                  }))
+                }
+                label="Date of Entry"
+              >
+                <MenuItem value="">All</MenuItem>
+                {["2025", "2024", "2023", "2022", "2021", "2020"].map(
+                  (year) => (
+                    <MenuItem key={year} value={year}>
+                      {year}
+                    </MenuItem>
+                  )
+                )}
               </Select>
             </FormControl>
           </div>
