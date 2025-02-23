@@ -68,6 +68,11 @@ function DrawerAppBar() {
             <ButtonStyled openModal={true} bgColor="white" nav={true}>
               Contribute Salary
             </ButtonStyled>
+            <Link to="/about">
+              <ButtonStyled scrollToSection={true} bgColor="white" nav={true}>
+                About
+              </ButtonStyled>
+            </Link>
             {/* <ButtonStyled scrollToSection={true} bgColor="white" nav={true}>
               View Data
             </ButtonStyled> */}

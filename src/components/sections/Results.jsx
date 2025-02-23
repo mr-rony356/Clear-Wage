@@ -32,6 +32,11 @@ const Results = () => {
     firmSize: "",
     dateOfEntry: "",
   });
+  const [page, setPage] = useState(0);
+  const [rowsPerPage] = useState(50);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const tableRef = useRef(null);
+  const startX = useRef(0);
 
   // Update localStorage whenever hasContributed changes
   useEffect(() => {
@@ -153,6 +158,26 @@ const Results = () => {
       return a[sortField].localeCompare(b[sortField]);
     }
   });
+
+  // Add touch event handlers for mobile swipe
+  const handleTouchStart = (e) => {
+    startX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e) => {
+    if (!tableRef.current) return;
+
+    const currentX = e.touches[0].clientX;
+    const diff = startX.current - currentX;
+    tableRef.current.scrollLeft += diff;
+    startX.current = currentX;
+
+    if (!isScrolling) setIsScrolling(true);
+  };
+
+  const handleTouchEnd = () => {
+    setIsScrolling(false);
+  };
 
   return (
     <div id="last" ref={lastSectionRef}>
@@ -361,112 +386,107 @@ const Results = () => {
           </div>
           {isMobile && (
             <Typography sx={{ fontSize: "12px", color: "black" }}>
-              Shift your phone horizontally to view full data.
+              Swipe left to view full data
             </Typography>
           )}
 
-          <ul
-            className="tables"
+          <div
+            ref={tableRef}
             style={{
-              listStyleType: "none",
-              padding: 0,
-              border: "1px solid black",
-              width: isMobile ? "100%" : "100%",
-              marginTop: isMobile ? "10px" : "0",
+              width: "100%",
+              overflowX: isMobile ? "auto" : "visible",
+              WebkitOverflowScrolling: "touch",
             }}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
           >
-            <li
-              className="header"
+            <ul
+              className="tables"
               style={{
-                backgroundColor: "black",
-                color: "white",
-                fontWeight: "bold",
-                display: "flex",
-                borderBottom: "1px solid black",
-                fontSize: isMobile ? "11px" : "14px",
-                textAlign: "center",
+                listStyleType: "none",
+                padding: 0,
+                border: "1px solid black",
+                width: isMobile ? "200%" : "100%",
+                marginTop: isMobile ? "10px" : "0",
               }}
             >
-              {isMobile && (
-                <>
-                  <span>JD Year</span>
-                  <span>Salary</span>
-                  <span>Bonus</span>
-                  <span>Practice Area</span>
-                  <span>Firm Size</span>
-                </>
-              )}
-              {!isMobile && (
-                <>
-                  <span>JD Year</span>
-                  <span>Salary</span>
-                  <span>Bonus</span>
-                  <span>Practice Area</span>
-                  <span>Firm Size</span>
-                  <span>Title</span>
-                  <span>City</span>
-                  <span>State</span>
-                  <span>Gender</span>
-                  <span>Date</span>
-                </>
-              )}
-            </li>
+              <li
+                className="header"
+                style={{
+                  backgroundColor: "black",
+                  color: "white",
+                  fontWeight: "bold",
+                  display: "flex",
+                  borderBottom: "1px solid black",
+                  fontSize: isMobile ? "11px" : "14px",
+                  textAlign: "center",
+                }}
+              >
+                <span>JD Year</span>
+                <span>Salary</span>
+                <span>Bonus</span>
+                <span>Practice Area</span>
+                <span>Firm Size</span>
+                <span>Title</span>
+                <span>City</span>
+                <span>State</span>
+                <span>Gender</span>
+                <span>Date</span>
+              </li>
 
-            {loading ? (
-              <div className="flex-center" style={{ height: "80px" }}>
-                <CircularProgress />
-              </div>
-            ) : (
-              sortedData.map((rowData, index) => (
-                <li
-                  className="body"
-                  key={index}
-                  style={{
-                    backgroundColor: index % 2 === 0 ? "#f5f7f9" : "white",
-                    display: "flex",
-                    borderBottom: "1px solid black",
-                    color: "black",
-                    fontSize: isMobile ? "11px" : "14px",
-                  }}
-                >
-                  <span style={{ textAlign: "center" }}>{rowData.JDYear}</span>
-                  <span style={{ textAlign: "right" }}>
-                    {rowData.Salary.toLocaleString("en-US", {
-                      style: "currency",
-                      currency: "USD",
-                      minimumFractionDigits: 0,
-                      maximumFractionDigits: 0,
-                    })}
-                  </span>
-                  <span style={{ textAlign: "right" }}>
-                    {rowData.Bonuses.toLocaleString("en-US", {
-                      style: "currency",
-                      currency: "USD",
-                      minimumFractionDigits: 0,
-                      maximumFractionDigits: 0,
-                    })}
-                  </span>
-
-                  <span style={{ textAlign: "left" }}>
-                    {rowData.PracticeArea}
-                  </span>
-                  <span style={{ textAlign: "center" }}>
-                    {rowData.FirmSize}
-                  </span>
-
-                  {!isMobile && (
-                    <span style={{ textAlign: "left" }}>{rowData.Title}</span>
-                  )}
-                  {!isMobile && (
-                    <span style={{ textAlign: "left" }}>{rowData.City}</span>
-                  )}
-                  {!isMobile && (
-                    <>
+              {loading ? (
+                <div className="flex-center" style={{ height: "80px" }}>
+                  <CircularProgress />
+                </div>
+              ) : (
+                // Apply pagination to sortedData
+                sortedData
+                  .slice(page * rowsPerPage, (page + 1) * rowsPerPage)
+                  .map((rowData, index) => (
+                    <li
+                      className="body"
+                      key={index}
+                      style={{
+                        backgroundColor: index % 2 === 0 ? "#f5f7f9" : "white",
+                        display: "flex",
+                        borderBottom: "1px solid black",
+                        color: "black",
+                        fontSize: isMobile ? "11px" : "14px",
+                      }}
+                    >
+                      <span style={{ textAlign: "left" }}>
+                        {rowData.JDYear}
+                      </span>
+                      <span style={{ textAlign: "left" }}>
+                        {rowData.Salary.toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "USD",
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0,
+                        })}
+                      </span>
+                      <span style={{ textAlign: "left" }}>
+                        {rowData.Bonuses.toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "USD",
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0,
+                        })}
+                      </span>
+                      <span style={{ textAlign: "left" }}>
+                        {rowData.PracticeArea}
+                      </span>
+                      <span style={{ textAlign: "left" }}>
+                        {rowData.FirmSize}
+                      </span>
+                      <span style={{ textAlign: "left" }}>{rowData.Title}</span>
+                      <span style={{ textAlign: "left" }}>{rowData.City}</span>
                       <span style={{ textAlign: "left" }}>{rowData.State}</span>
                       <span style={{ textAlign: "left" }}>
                         {rowData.Gender}
                       </span>
-                      <span style={{ textAlign: "right" }}>
+                      <span style={{ textAlign: "left" }}>
                         {rowData.Date_Documented
                           ? new Date(
                               rowData.Date_Documented
@@ -477,19 +497,70 @@ const Results = () => {
                             })
                           : "-"}
                       </span>
-                    </>
-                  )}
-                </li>
-              ))
-            )}
-            {!loading && sortedData.length === 0 && (
-              <li
-                style={{ padding: "10px 0", color: "black", fontSize: "14px" }}
+                    </li>
+                  ))
+              )}
+            </ul>
+          </div>
+
+          {/* Add pagination controls */}
+          {!loading && sortedData.length > rowsPerPage && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                gap: "10px",
+                marginTop: "20px",
+              }}
+            >
+              <button
+                onClick={() => setPage((prev) => Math.max(0, prev - 1))}
+                disabled={page === 0}
+                style={{
+                  padding: "5px 10px",
+                  backgroundColor: page === 0 ? "#ccc" : "black",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "4px",
+                  cursor: page === 0 ? "default" : "pointer",
+                }}
               >
-                No Data found
-              </li>
-            )}
-          </ul>
+                Previous
+              </button>
+              <span style={{ padding: "5px 10px" }}>
+                Page {page + 1} of {Math.ceil(sortedData.length / rowsPerPage)}
+              </span>
+              <button
+                onClick={() =>
+                  setPage((prev) =>
+                    Math.min(
+                      Math.ceil(sortedData.length / rowsPerPage) - 1,
+                      prev + 1
+                    )
+                  )
+                }
+                disabled={
+                  page >= Math.ceil(sortedData.length / rowsPerPage) - 1
+                }
+                style={{
+                  padding: "5px 10px",
+                  backgroundColor:
+                    page >= Math.ceil(sortedData.length / rowsPerPage) - 1
+                      ? "#ccc"
+                      : "black",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "4px",
+                  cursor:
+                    page >= Math.ceil(sortedData.length / rowsPerPage) - 1
+                      ? "default"
+                      : "pointer",
+                }}
+              >
+                Next
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>

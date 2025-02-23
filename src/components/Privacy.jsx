@@ -10,7 +10,13 @@ const PrivacyPolicy = () => {
         variant="h4"
         component="h1"
         gutterBottom
-        sx={{ fontWeight: "bold", mb: 4, color: "white", textAlign: "center" }}
+        sx={{
+          fontWeight: "bold",
+          mb: 4,
+          color: "white",
+          textAlign: "center",
+          marginTop: "100px",
+        }}
       >
         ClearWage.co Privacy Policy
       </Typography>
@@ -233,7 +239,10 @@ const PrivacyPolicy = () => {
         <Typography variant="body1" sx={{ fontWeight: "bold" }}>
           hey@clearwage.co
         </Typography>
-        <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+        <Typography
+          variant="body1"
+          sx={{ fontWeight: "bold", paddingBottom: "100px" }}
+        >
           ClearWage.co
         </Typography>
       </Box>

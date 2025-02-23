@@ -1,6 +1,6 @@
 import React from "react";
 import { styled } from "@mui/system";
-import { Link } from "@mui/material";
+import { Link, Typography } from "@mui/material";
 
 const FooterWrapper = styled("footer")({
   backgroundColor: "black",
@@ -40,6 +40,11 @@ const Footer = () => {
         Have someone reach out to discuss opportunities
       </StyledLink>
       <br /> <br />
+      <Typography>
+        How can we make clearwage even more valuable for you? Let us know at
+        <StyledLink href="mailto:hey@clearwage.co">hey@clearwage.co</StyledLink>
+      </Typography>
+      <br />
       <StyledLink
         href="/privacy-policy"
         rel="noopener noreferrer"
