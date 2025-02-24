@@ -4,7 +4,7 @@ import Home from "./components/Home";
 import { StepDataProvider } from "./context/stepsData"; // Importing StepDataProvider from your StepDataContext file
 import PrivacyPolicy from "./components/Privacy";
 import About from "./components/About";
-
+import Footer from "./components/Footer";
 function App() {
   return (
     <BrowserRouter>
@@ -17,6 +17,7 @@ function App() {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         </Routes>
       </StepDataProvider>
+      <Footer />
     </BrowserRouter>
   );
 }

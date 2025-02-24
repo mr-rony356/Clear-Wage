@@ -32,8 +32,6 @@ const Results = () => {
     firmSize: "",
     dateOfEntry: "",
   });
-  const [page, setPage] = useState(0);
-  const [rowsPerPage] = useState(50);
   const [isScrolling, setIsScrolling] = useState(false);
   const tableRef = useRef(null);
   const startX = useRef(0);
@@ -201,7 +199,13 @@ const Results = () => {
               For Example: 2018, Commercial Litigation, Associate
             </span>
           </Typography>
-
+          {!isMobile && (
+            <Typography
+              sx={{ fontSize: "14px", color: "black", fontWeight: "bold" }}
+            >
+              {filteredData.length} results
+            </Typography>
+          )}
           <div
             style={{ width: isMobile ? "80%" : "30%", position: "relative" }}
           >
@@ -394,9 +398,14 @@ const Results = () => {
             </FormControl>
           </div>
           {isMobile && (
-            <Typography sx={{ fontSize: "12px", color: "black" }}>
-              Swipe left to view full data
-            </Typography>
+            <div style={{ width: "100%", textAlign: "center" }}>
+              <Typography sx={{ fontSize: "14px", color: "black", fontWeight: "bold" }}>
+                {filteredData.length} results
+              </Typography>
+              <Typography sx={{ fontSize: "12px", color: "black" }}>
+                Swipe left to view full data
+              </Typography>
+            </div>
           )}
 
           <div
@@ -449,127 +458,62 @@ const Results = () => {
                   <CircularProgress />
                 </div>
               ) : (
-                // Apply pagination to sortedData
-                sortedData
-                  .slice(page * rowsPerPage, (page + 1) * rowsPerPage)
-                  .map((rowData, index) => (
-                    <li
-                      className="body"
-                      key={index}
-                      style={{
-                        backgroundColor: index % 2 === 0 ? "#f5f7f9" : "white",
-                        display: "flex",
-                        borderBottom: "1px solid black",
-                        color: "black",
-                        fontSize: isMobile ? "11px" : "14px",
-                      }}
-                    >
-                      <span style={{ textAlign: "left" }}>
-                        {rowData.JDYear}
-                      </span>
-                      <span style={{ textAlign: "left" }}>
-                        {rowData.Salary.toLocaleString("en-US", {
-                          style: "currency",
-                          currency: "USD",
-                          minimumFractionDigits: 0,
-                          maximumFractionDigits: 0,
-                        })}
-                      </span>
-                      <span style={{ textAlign: "left" }}>
-                        {rowData.Bonuses.toLocaleString("en-US", {
-                          style: "currency",
-                          currency: "USD",
-                          minimumFractionDigits: 0,
-                          maximumFractionDigits: 0,
-                        })}
-                      </span>
-                      <span style={{ textAlign: "left" }}>
-                        {rowData.PracticeArea}
-                      </span>
-                      <span style={{ textAlign: "left" }}>
-                        {rowData.FirmSize}
-                      </span>
-                      <span style={{ textAlign: "left" }}>{rowData.Title}</span>
-                      <span style={{ textAlign: "left" }}>{rowData.City}</span>
-                      <span style={{ textAlign: "left" }}>{rowData.State}</span>
-                      <span style={{ textAlign: "left" }}>
-                        {rowData.Gender}
-                      </span>
-                      <span style={{ textAlign: "left" }}>
-                        {rowData.Date_Documented
-                          ? new Date(
-                              rowData.Date_Documented
-                            ).toLocaleDateString("en-US", {
+                sortedData.map((rowData, index) => (
+                  <li
+                    className="body"
+                    key={index}
+                    style={{
+                      backgroundColor: index % 2 === 0 ? "#f5f7f9" : "white",
+                      display: "flex",
+                      borderBottom: "1px solid black",
+                      color: "black",
+                      fontSize: isMobile ? "11px" : "14px",
+                    }}
+                  >
+                    <span style={{ textAlign: "left" }}>{rowData.JDYear}</span>
+                    <span style={{ textAlign: "left" }}>
+                      {rowData.Salary.toLocaleString("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                      })}
+                    </span>
+                    <span style={{ textAlign: "left" }}>
+                      {rowData.Bonuses.toLocaleString("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                      })}
+                    </span>
+                    <span style={{ textAlign: "left" }}>
+                      {rowData.PracticeArea}
+                    </span>
+                    <span style={{ textAlign: "left" }}>
+                      {rowData.FirmSize}
+                    </span>
+                    <span style={{ textAlign: "left" }}>{rowData.Title}</span>
+                    <span style={{ textAlign: "left" }}>{rowData.City}</span>
+                    <span style={{ textAlign: "left" }}>{rowData.State}</span>
+                    <span style={{ textAlign: "left" }}>{rowData.Gender}</span>
+                    <span style={{ textAlign: "left" }}>
+                      {rowData.Date_Documented
+                        ? new Date(rowData.Date_Documented).toLocaleDateString(
+                            "en-US",
+                            {
                               month: "2-digit",
                               day: "2-digit",
                               year: "numeric",
-                            })
-                          : "-"}
-                      </span>
-                    </li>
-                  ))
+                            }
+                          )
+                        : "-"}
+                    </span>
+                  </li>
+                ))
               )}
             </ul>
           </div>
-
-          {/* Add pagination controls */}
-          {!loading && sortedData.length > rowsPerPage && (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                gap: "10px",
-                marginTop: "20px",
-              }}
-            >
-              <button
-                onClick={() => setPage((prev) => Math.max(0, prev - 1))}
-                disabled={page === 0}
-                style={{
-                  padding: "5px 10px",
-                  backgroundColor: page === 0 ? "#ccc" : "black",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "4px",
-                  cursor: page === 0 ? "default" : "pointer",
-                }}
-              >
-                Previous
-              </button>
-              <span style={{ padding: "5px 10px" }}>
-                Page {page + 1} of {Math.ceil(sortedData.length / rowsPerPage)}
-              </span>
-              <button
-                onClick={() =>
-                  setPage((prev) =>
-                    Math.min(
-                      Math.ceil(sortedData.length / rowsPerPage) - 1,
-                      prev + 1
-                    )
-                  )
-                }
-                disabled={
-                  page >= Math.ceil(sortedData.length / rowsPerPage) - 1
-                }
-                style={{
-                  padding: "5px 10px",
-                  backgroundColor:
-                    page >= Math.ceil(sortedData.length / rowsPerPage) - 1
-                      ? "#ccc"
-                      : "black",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "4px",
-                  cursor:
-                    page >= Math.ceil(sortedData.length / rowsPerPage) - 1
-                      ? "default"
-                      : "pointer",
-                }}
-              >
-                Next
-              </button>
-            </div>
-          )}
         </div>
       )}
     </div>

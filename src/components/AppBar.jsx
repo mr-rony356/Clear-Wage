@@ -100,6 +100,11 @@ function DrawerAppBar() {
           <ButtonStyled scrollToSection={true} bgColor="black" nav={true}>
             View Data
           </ButtonStyled>
+          <Link to="/about">
+            <ButtonStyled scrollToSection={true} bgColor="black" nav={true}>
+              About
+            </ButtonStyled>
+          </Link>
         </List>
       </Drawer>
     </React.Fragment>

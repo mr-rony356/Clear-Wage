@@ -14,7 +14,7 @@ const About = () => {
           color: "white",
         }}
       >
-        <Typography variant="h3" sx={{ my: "100px" }}>
+        <Typography variant="h3" sx={{  mb: "50px",mt: "100px" }}>
           About
         </Typography>
 
@@ -71,7 +71,14 @@ const About = () => {
           component={Link}
           to="/"
           variant="contained"
-          sx={{ mb: "100px" }}
+          sx={{ 
+            mb: "100px",
+            bgcolor: "#f5f5f5",
+            color: "black",
+            '&:hover': {
+              bgcolor: "#e0e0e0"
+            }
+          }}
         >
           Back To Home Page
         </Button>

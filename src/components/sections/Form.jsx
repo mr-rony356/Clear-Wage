@@ -60,11 +60,13 @@ function Form() {
       >
         {!hasContributed ? (
           <>
-            <Title>
-              {totalEntries.toLocaleString()} attorneys (and counting) have
-              shared their salaries to create the most powerful attorney salary
-              database
-            </Title>
+            <Box sx={{ maxWidth: "850px", margin: "0 auto" }}>
+              <Title>
+                {totalEntries.toLocaleString()} attorneys (and counting) have
+                shared their salaries to create the most powerful attorney
+                salary database
+              </Title>
+            </Box>
             <div className="flex-center">
               <Subtitle style={{ maxWidth: "650px" }}>
                 <strong>
@@ -98,13 +100,18 @@ function Form() {
             <h1
               style={{
                 fontWeight: "bold",
-                color: "white",
+                color: "#b59658",
                 fontSize: isMobile ? "1.5rem" : "2rem",
-                marginBottom: "2rem",
+                marginBottom: "10px",
               }}
             >
               Get Exclusive Salary Trends & Industry Insights Monthly
             </h1>
+            <i>
+              <p style={{ fontSize: "12px", color: "white", marginBottom: "20px" }}>
+                No spam, just pure value. Unsubscribe anytime.{" "}
+              </p>
+            </i>
             <iframe
               src="https://embeds.beehiiv.com/8e601ff8-0da2-4be5-ae6a-34be5be2e922?slim=true"
               data-test-id="beehiiv-embed"

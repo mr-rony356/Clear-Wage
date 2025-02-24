@@ -37,18 +37,17 @@ const Footer = () => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        Have someone reach out to discuss opportunities
+        Have someone reach out to discuss opportunities.
       </StyledLink>
       <br /> <br />
       <Typography>
-        How can we make clearwage even more valuable for you? Let us know at
-        <StyledLink href="mailto:hey@clearwage.co">hey@clearwage.co</StyledLink>
+        How can we make clearwage even more valuable for you? Let us know at{" "}
+        <StyledLink href="mailto:hey@clearwage.co">
+          hey@clearwage.co.
+        </StyledLink>
       </Typography>
       <br />
-      <StyledLink
-        href="/privacy-policy"
-        rel="noopener noreferrer"
-      >
+      <StyledLink href="/privacy-policy" rel="noopener noreferrer">
         Privacy Policy
       </StyledLink>{" "}
       <br /> <br />
