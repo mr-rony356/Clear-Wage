@@ -19,8 +19,13 @@ function Form() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [totalEntries, setTotalEntries] = useState(0);
+  const [hasContributed, setHasContributed] = useState(false);
 
   useEffect(() => {
+    // Check localStorage for contribution status
+    const contributionStatus = localStorage.getItem("hasContributed");
+    setHasContributed(contributionStatus === "true");
+
     const fetchTotalEntries = async () => {
       try {
         const response = await fetch(
@@ -39,6 +44,7 @@ function Form() {
 
   const handleContributionStatus = () => {
     localStorage.setItem("hasContributed", "true");
+    setHasContributed(true);
     window.scrollTo({
       top: document.getElementById("last").offsetTop,
       behavior: "smooth",
@@ -52,33 +58,77 @@ function Form() {
           maxWidth: isMobile ? "95%" : "70%",
         }}
       >
-        <Title> See How Your Salary Stacks Up Against Other Attorneys</Title>
-        <div className="flex-center">
-          <Subtitle style={{ maxWidth: "650px" }}>
-            {totalEntries.toLocaleString()} attorneys (and counting) have shared
-            their salaries to create the most powerful attorney salary database.
-            <br /> <br /> It only takes seconds. Your contribution is 100% anonymous.
-            No names, no tracking—just the raw numbers that help everyone. And
-            the knowledge you gain could mean thousands more in your next
-            paycheck. <br /> <br /> Don't be left in the dark—Enter your salary
-            now and unlock instant access.
-          </Subtitle>
-        </div>
+        {!hasContributed ? (
+          <>
+            <Box sx={{ maxWidth: "850px", margin: "0 auto" }}>
+              <Title>
+                {totalEntries.toLocaleString()} attorneys (and counting) have
+                shared their salaries to create the most powerful attorney
+                salary database
+              </Title>
+            </Box>
+            <div className="flex-center">
+              <Subtitle style={{ maxWidth: "650px" }}>
+                <strong>
+                  See How Your Salary Stacks Up Against Other Attorneys
+                </strong>
+                <br /> <br />
+                It only takes seconds. Your contribution is 100% anonymous. No
+                names, no tracking—just the raw numbers that help everyone. And
+                the knowledge you gain could mean thousands more in your next
+                paycheck. <br /> <br /> Don't be left in the dark—Enter your
+                salary now and unlock instant access.
+              </Subtitle>
+            </div>
+            <ButtonStyled openModal={true} bgColor="#b59658">
+              Unlock Salary Data Now →
+            </ButtonStyled>
+            <div
+              onClick={handleContributionStatus}
+              style={{
+                fontSize: ".8rem",
+                fontWeight: "bold",
+                textDecoration: "underline",
+                cursor: "pointer",
+              }}
+            >
+              I already added my salary →
+            </div>
+          </>
+        ) : (
+          <>
+            <h1
+              style={{
+                fontWeight: "bold",
+                color: "#b59658",
+                fontSize: isMobile ? "1.5rem" : "2rem",
+                marginBottom: "10px",
+              }}
+            >
+              Get Exclusive Salary Trends & Industry Insights Monthly
+            </h1>
+            <i>
+              <p style={{ fontSize: "12px", color: "white", marginBottom: "20px" }}>
+                No spam, just pure value. Unsubscribe anytime.{" "}
+              </p>
+            </i>
+            <iframe
+              src="https://embeds.beehiiv.com/8e601ff8-0da2-4be5-ae6a-34be5be2e922?slim=true"
+              data-test-id="beehiiv-embed"
+              height="52"
+              frameBorder="0"
+              scrolling="no"
+              style={{
+                margin: 0,
+                borderRadius: "0px !important",
+                backgroundColor: "transparent",
+                width: "100%",
+                maxWidth: "500px",
+              }}
+            />
+          </>
+        )}
       </Box>
-      <ButtonStyled openModal={true} bgColor="#b59658">
-        Unlock Salary Data Now →
-      </ButtonStyled>
-      <div
-        onClick={handleContributionStatus}
-        style={{
-          fontSize: ".8rem",
-          fontWeight: "bold",
-          textDecoration: "underline",
-          cursor: "pointer",
-        }}
-      >
-        I already added my salary →
-      </div>
     </MiuiSection>
   );
 }

@@ -68,6 +68,11 @@ function DrawerAppBar() {
             <ButtonStyled openModal={true} bgColor="white" nav={true}>
               Contribute Salary
             </ButtonStyled>
+            <Link to="/about">
+              <ButtonStyled scrollToSection={true} bgColor="white" nav={true}>
+                About
+              </ButtonStyled>
+            </Link>
             {/* <ButtonStyled scrollToSection={true} bgColor="white" nav={true}>
               View Data
             </ButtonStyled> */}
@@ -92,9 +97,11 @@ function DrawerAppBar() {
           <ButtonStyled openModal={true} bgColor="black" nav={true}>
             Contribute Salary
           </ButtonStyled>
-          <ButtonStyled scrollToSection={true} bgColor="black" nav={true}>
-            View Data
-          </ButtonStyled>
+          <Link to="/about">
+            <ButtonStyled scrollToSection={false} bgColor="black" nav={true}>
+              About
+            </ButtonStyled>
+          </Link>
         </List>
       </Drawer>
     </React.Fragment>

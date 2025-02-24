@@ -16,8 +16,6 @@ function Home() {
 
             <Form></Form>
             <Results></Results>
-            <Footer></Footer>
-
 
         </>
 

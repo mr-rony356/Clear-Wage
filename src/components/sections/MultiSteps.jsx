@@ -17,6 +17,7 @@ import {
   useMediaQuery,
   useTheme,
   IconButton,
+  CircularProgress,
 } from "@mui/material";
 import { useStepData } from "../../context/stepsData";
 import CloseIcon from "@mui/icons-material/Close";
@@ -55,12 +56,23 @@ const FORM_STEPS = [
     label: "Title",
     required: true,
     options: [
+      {
+        value: "Assistant General Counsel (In-House)",
+        label: "Assistant General Counsel (In-House)",
+      },
+      {
+        value: "Associate General Counsel (In-House)",
+        label: "Associate General Counsel (In-House)",
+      },
       { value: "Associate", label: "Associate" },
-      { value: "Senior Associate", label: "Senior Associate" },
-      { value: "Non-equity partner", label: "Non-equity partner" },
       { value: "Equity partner", label: "Equity partner" },
-      { value: "Of counsel", label: "Of counsel" },
-      { value: "In-House General Counsel", label: "In-House General Counsel" },
+      {
+        value: "General Counsel (In-House)",
+        label: "General Counsel (In-House)",
+      },
+      { value: "Non-equity partner", label: "Non-equity partner" },
+      { value: "Of Counsel", label: "Of Counsel" },
+      { value: "Senior Associate", label: "Senior Associate" },
     ],
   },
   {
@@ -75,6 +87,7 @@ const FORM_STEPS = [
       { value: "Bankruptcy", label: "Bankruptcy" },
       { value: "Civil Litigation", label: "Civil Litigation" },
       { value: "Commercial  Litigation", label: "Commercial Litigation" },
+      { value: "Construction Litigation", label: "Construction Litigation" },
       {
         value: "Corporate (Transactional)",
         label: "Corporate (Transactional)",
@@ -83,6 +96,15 @@ const FORM_STEPS = [
       { value: "Energy", label: "Energy" },
       { value: "Environment", label: "Environment" },
       { value: "Erisa", label: "ERISA" },
+      { value: "Family", label: "Family" },
+      {
+        value: "Financial Services Litigation",
+        label: "Financial Services Litigation",
+      },
+      {
+        value: "First Party Property Defense",
+        label: "First Party Property Defense",
+      },
       { value: "General Practice", label: "General Practice" },
       { value: "Government", label: "Government" },
       { value: "Healthcare", label: "Healthcare" },
@@ -93,9 +115,26 @@ const FORM_STEPS = [
         label: "Insurance Defense Litigation",
       },
       { value: "Insurance ", label: "Insurance " },
+      { value: "Insurance Coverage", label: "Insurance Coverage" },
       { value: "Insurance Plaintiffs", label: "Insurance Plaintiffs" },
       { value: "Intellection Property", label: "Intellection Property" },
       { value: "Labor & Employment", label: "Labor & Employment" },
+      {
+        value: "Medical Malpractice Defence",
+        label: "Medical Malpractice Defence",
+      },
+      {
+        value: "Medical Malpractice Plaintiffs",
+        label: "Medical Malpractice Plaintiffs",
+      },
+      {
+        value: "Personal Injury Plaintiffs",
+        label: "Personal Injury Plaintiffs",
+      },
+      {
+        value: "Property Damage Plaintiffs",
+        label: "Property Damage Plaintiffs",
+      },
       { value: "Real Estate", label: "Real Estate" },
       { value: "Tax", label: "Tax" },
       { value: "Transportation", label: "Transportation" },
@@ -275,6 +314,7 @@ function Modal({ open, onClose }) {
     personalEmail: "",
     cellNumber: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -291,6 +331,9 @@ function Modal({ open, onClose }) {
   };
 
   const handleSubmit = async () => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+
     const scriptUrl =
       "https://script.google.com/macros/s/AKfycbxWJzD7pTYLpFvgi_Y7PuLhKCpbUAW9FR_TLupd-HoIkJVqcknqw7KRfrWf3O5XxsU/exec";
     const formDataAllSteps = { ...formData };
@@ -303,12 +346,13 @@ function Modal({ open, onClose }) {
 
     try {
       await fetch(`${scriptUrl}?${queryParams}`, { method: "POST" });
-      // Set localStorage to indicate user has contributed
       localStorage.setItem("hasContributed", "true");
       addStepData(formData);
       setShowPopup(true);
     } catch (error) {
       console.error("Error submitting form:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -378,7 +422,13 @@ function Modal({ open, onClose }) {
                   : "Skip"}
               </Button>
             ) : (
-              <Button onClick={handleSubmit}>Submit</Button>
+              <Button
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+                startIcon={isSubmitting ? <CircularProgress size={20} /> : null}
+              >
+                {isSubmitting ? "Processing..." : "Submit"}
+              </Button>
             )}
           </DialogActions>
         </Dialog>
@@ -461,7 +511,13 @@ function Modal({ open, onClose }) {
               )
             )}
           </DialogContent>
-          <DialogActions sx={{ display: "flex", flexDirection: "column" }}>
+          <DialogActions
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              marginBottom: "20px",
+            }}
+          >
             <Button
               onClick={handlePopupSubmit}
               sx={{
