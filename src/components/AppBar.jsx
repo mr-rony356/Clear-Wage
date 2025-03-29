@@ -1,110 +1,94 @@
 import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import { useMediaQuery, useTheme } from "@mui/material";
-import ButtonStyled from "./ButtonWrapper ";
 import { Link } from "react-router-dom";
-
-const navItems = ["Contribute Salary", "View salaries"];
+import {
+  Bars3Icon as MenuIcon,
+  XMarkIcon as XIcon,
+} from "@heroicons/react/24/outline";
 
 function DrawerAppBar() {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
-  const [openDrawer, setOpenDrawer] = React.useState(false);
-
-  const handleDrawerToggle = () => {
-    setOpenDrawer(!openDrawer);
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
   };
 
   return (
-    <React.Fragment>
-      <AppBar position="static" sx={{ bgcolor: "black" }}>
-        <Toolbar>
-          <Typography
-            variant="p"
-            component="div"
-            sx={{
-              flexGrow: 1,
-              color: "white",
-              fontWeight: "900",
-              fontFamily: "serif",
-              fontSize: isMobile ? "25px" : "30px",
-            }}
-          >
-            <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-              CLEAR{" "}
-              <span
-                style={{
-                  color: "green",
-                }}
-              >
-                WAGE
-              </span>
+    <header className="relative z-[1000]">
+      <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-[70px] py-[18px]">
+        <div className="flex justify-between items-center">
+          {/* Logo */}
+          <div className="md:flex-1 md:ml-[180px]">
+            <Link to="/">
+              <h1 className="text-[28px] font-[700] leading-[42px] text-white">
+                ClearWage
+              </h1>
             </Link>
-          </Typography>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            onClick={handleDrawerToggle}
-            sx={{ display: { md: "none" } }}
-          >
-            <MenuIcon
-              sx={{
-                fontSize: "40px",
-              }}
-            />
-          </IconButton>
-          <List sx={{ display: { xs: "none", md: "flex" } }}>
-            <ButtonStyled openModal={true} bgColor="white" nav={true}>
-              Contribute Salary
-            </ButtonStyled>
-            <Link to="/about">
-              <ButtonStyled scrollToSection={true} bgColor="white" nav={true}>
-                About
-              </ButtonStyled>
+          </div>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex gap-[30px]">
+            <Link
+              to="/"
+              className="text-[13px] font-bold hover:text-[gold] tracking-[1px] text-white"
+            >
+              HOME
             </Link>
-            {/* <ButtonStyled scrollToSection={true} bgColor="white" nav={true}>
-              View Data
-            </ButtonStyled> */}
-          </List>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        anchor="left"
-        open={openDrawer}
-        onClose={handleDrawerToggle}
-        sx={{
-          "& .MuiDrawer-paper": { width: "240px" },
-        }}
+            <Link
+              to="/about"
+              className="text-[13px] font-bold hover:text-[gold] tracking-[1px] text-white"
+            >
+              ABOUT
+            </Link>
+          </nav>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <button onClick={toggleMobileMenu} className="text-white p-2">
+              {mobileMenuOpen ? (
+                <XIcon className="h-10 w-10" />
+              ) : (
+                <MenuIcon className="h-10 w-10" />
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Navigation */}
+      <div
+        className={`md:hidden fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-300 ease-in-out ${
+          mobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        }`}
+        onClick={toggleMobileMenu}
       >
-        <List
-          sx={{
-            marginTop: "100px",
-            width: "100%",
-            textAlign: "center",
-          }}
+        <div
+          className={`fixed inset-x-0 bottom-0 bg-gradient-to-b from-gray-900 to-black transform transition-transform duration-300 ease-in-out ${
+            mobileMenuOpen ? "translate-y-0" : "translate-y-full"
+          }`}
+          onClick={(e) => e.stopPropagation()}
         >
-          <ButtonStyled openModal={true} bgColor="black" nav={true}>
-            Contribute Salary
-          </ButtonStyled>
-          <Link to="/about">
-            <ButtonStyled scrollToSection={false} bgColor="black" nav={true}>
-              About
-            </ButtonStyled>
-          </Link>
-        </List>
-      </Drawer>
-    </React.Fragment>
+          <div className="p-8 space-y-2">
+            <div className="flex justify-center mb-6">
+              <div className="w-12 h-1 bg-gray-600 rounded-full"></div>
+            </div>
+            <Link
+              to="/"
+              className="block text-[16px] font-bold text-white hover:text-[gold] tracking-[1px] text-center py-4"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              HOME
+            </Link>
+            <Link
+              to="/about"
+              className="block text-[16px] font-bold text-white hover:text-[gold] tracking-[1px] text-center py-4"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              ABOUT
+            </Link>
+          </div>
+        </div>
+      </div>
+    </header>
   );
 }
 

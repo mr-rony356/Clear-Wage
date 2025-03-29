@@ -8,6 +8,14 @@ import {
   Select,
   MenuItem,
   Typography,
+  Pagination,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { FormControl, InputLabel } from "@mui/material";
@@ -35,6 +43,8 @@ const Results = () => {
   const [isScrolling, setIsScrolling] = useState(false);
   const tableRef = useRef(null);
   const startX = useRef(0);
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 25;
 
   // Update localStorage whenever hasContributed changes
   useEffect(() => {
@@ -157,6 +167,33 @@ const Results = () => {
     }
   });
 
+  // Modify the sortedData to only show last 100 results
+  const limitedData = sortedData.slice(-100);
+
+  // Calculate pagination
+  const totalPages = Math.ceil(limitedData.length / rowsPerPage);
+  const currentPageData = limitedData.slice(
+    (page - 1) * rowsPerPage,
+    page * rowsPerPage
+  );
+
+  // Handle page change
+  const handlePageChange = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  // Modify firm size display
+  const simplifyFirmSize = (size) => {
+    const sizeMap = {
+      "Boutique (1-20 attorneys)": "Boutique",
+      "Mid-size (21-100 attorneys)": "Mid-size",
+      "Large (101+ attorneys)": "Large",
+      Am100: "Am100",
+      Am200: "Am200",
+    };
+    return sizeMap[size] || size;
+  };
+
   // Add touch event handlers for mobile swipe
   const handleTouchStart = (e) => {
     startX.current = e.touches[0].clientX;
@@ -177,6 +214,107 @@ const Results = () => {
     setIsScrolling(false);
   };
 
+  // Add these styles
+  const headerCellStyle = {
+    color: "white",
+    fontWeight: "bold",
+    backgroundColor: "transparent",
+    fontSize: isMobile ? "11px" : "14px",
+    padding: isMobile ? "8px 4px" : "16px 8px",
+  };
+
+  const bodyCellStyle = {
+    color: "white",
+    fontSize: isMobile ? "11px" : "14px",
+    padding: isMobile ? "8px 4px" : "16px 8px",
+  };
+
+  // Replace the existing table JSX with this new version
+  const renderTable = () => (
+    <TableContainer
+      component={Paper}
+      sx={{
+        backgroundColor: "#1a1a1a",
+        maxWidth: isMobile ? "100vw" : "100%",
+        overflowX: "auto",
+      }}
+    >
+      <Table sx={{ minWidth: 650 }}>
+        <TableHead>
+          <TableRow>
+            <TableCell sx={headerCellStyle}>JD Year</TableCell>
+            <TableCell sx={headerCellStyle}>Salary</TableCell>
+            <TableCell sx={headerCellStyle}>Bonus</TableCell>
+            <TableCell sx={headerCellStyle}>Practice Area</TableCell>
+            <TableCell sx={headerCellStyle}>Firm Size</TableCell>
+            <TableCell sx={headerCellStyle}>Title</TableCell>
+            <TableCell sx={headerCellStyle}>City</TableCell>
+            <TableCell sx={headerCellStyle}>State</TableCell>
+            <TableCell sx={headerCellStyle}>Gender</TableCell>
+            <TableCell sx={headerCellStyle}>Date</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {loading ? (
+            <TableRow>
+              <TableCell colSpan={10} align="center">
+                <CircularProgress />
+              </TableCell>
+            </TableRow>
+          ) : (
+            currentPageData.map((rowData, index) => (
+              <TableRow
+                key={index}
+                sx={{
+                  backgroundColor: index % 2 === 0 ? "#2a2a2a" : "#333333",
+                  "&:hover": { backgroundColor: "#404040" },
+                }}
+              >
+                <TableCell sx={bodyCellStyle}>{rowData.JDYear}</TableCell>
+                <TableCell sx={bodyCellStyle}>
+                  {rowData.Salary.toLocaleString("en-US", {
+                    style: "currency",
+                    currency: "USD",
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
+                  })}
+                </TableCell>
+                <TableCell sx={bodyCellStyle}>
+                  {rowData.Bonuses.toLocaleString("en-US", {
+                    style: "currency",
+                    currency: "USD",
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
+                  })}
+                </TableCell>
+                <TableCell sx={bodyCellStyle}>{rowData.PracticeArea}</TableCell>
+                <TableCell sx={bodyCellStyle}>
+                  {simplifyFirmSize(rowData.FirmSize)}
+                </TableCell>
+                <TableCell sx={bodyCellStyle}>{rowData.Title}</TableCell>
+                <TableCell sx={bodyCellStyle}>{rowData.City}</TableCell>
+                <TableCell sx={bodyCellStyle}>{rowData.State}</TableCell>
+                <TableCell sx={bodyCellStyle}>{rowData.Gender}</TableCell>
+                <TableCell sx={bodyCellStyle}>
+                  {rowData.Date_Documented
+                    ? new Date(rowData.Date_Documented).toLocaleDateString(
+                        "en-US",
+                        {
+                          month: "2-digit",
+                          day: "2-digit",
+                          year: "numeric",
+                        }
+                      )
+                    : "-"}
+                </TableCell>
+              </TableRow>
+            ))
+          )}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+
   return (
     <div id="last" ref={lastSectionRef}>
       {!hasContributed ? (
@@ -186,24 +324,24 @@ const Results = () => {
           style={{
             position: "relative",
             display: "flex",
+            backgroundColor: "white",
             flexDirection: "column",
             alignItems: "center",
             textAlign: "center",
             gap: "20px",
-            margin: isMobile ? "20px 5px" : "50px ",
+            margin: isMobile ? "20px 5px" : "50px 0 ",
           }}
         >
-          <Typography sx={{ fontSize: "14px", color: "black" }}>
-            Separate keywords by commas to narrow your search <br />
-            <span style={{ fontSize: "10px" }}>
-              For Example: 2018, Commercial Litigation, Associate
-            </span>
+          <Typography
+            sx={{ fontSize: "20px", color: "black", marginTop: "20px" }}
+          >
+            Separate keywords by commas to narrow your search
           </Typography>
           {!isMobile && (
             <Typography
-              sx={{ fontSize: "14px", color: "black", fontWeight: "bold" }}
+              sx={{ fontSize: "56px", color: "black", fontWeight: "bold" }}
             >
-              {filteredData.length} results
+              {filteredData.length} Results
             </Typography>
           )}
           <div
@@ -211,19 +349,27 @@ const Results = () => {
           >
             <TextField
               fullWidth
-              placeholder="Search..."
+              placeholder={
+                isMobile
+                  ? "Search keywords..."
+                  : "Search keywords eg: 2018, Commercial Litigation, Associate"
+              }
               value={searchQuery}
-              size="small"
+              size="medium"
               onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <SearchIcon
               sx={{
-                color: "black",
-                position: "absolute",
-                right: "2%",
-                top: "8px",
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "gray",
+                  },
+                  borderRadius: "50px",
+                  padding: "5px",
+                  "&::placeholder": {
+                    fontSize: isMobile ? "8px" : "14px",
+                  },
+                },
               }}
-            ></SearchIcon>
+            />
           </div>
           <div
             style={{
@@ -399,8 +545,10 @@ const Results = () => {
           </div>
           {isMobile && (
             <div style={{ width: "100%", textAlign: "center" }}>
-              <Typography sx={{ fontSize: "14px", color: "black", fontWeight: "bold" }}>
-                {filteredData.length} results
+              <Typography
+                sx={{ fontSize: "40px", color: "black", fontWeight: "bold" }}
+              >
+                {filteredData.length} Results
               </Typography>
               <Typography sx={{ fontSize: "12px", color: "black" }}>
                 Swipe left to view full data
@@ -419,101 +567,35 @@ const Results = () => {
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            <ul
-              className="tables"
-              style={{
-                listStyleType: "none",
-                padding: 0,
-                border: "1px solid black",
-                width: isMobile ? "200%" : "100%",
-                marginTop: isMobile ? "10px" : "0",
-              }}
-            >
-              <li
-                className="header"
-                style={{
-                  backgroundColor: "black",
-                  color: "white",
-                  fontWeight: "bold",
-                  display: "flex",
-                  borderBottom: "1px solid black",
-                  fontSize: isMobile ? "11px" : "14px",
-                  textAlign: "center",
-                }}
-              >
-                <span>JD Year</span>
-                <span>Salary</span>
-                <span>Bonus</span>
-                <span>Practice Area</span>
-                <span>Firm Size</span>
-                <span>Title</span>
-                <span>City</span>
-                <span>State</span>
-                <span>Gender</span>
-                <span>Date</span>
-              </li>
-
-              {loading ? (
-                <div className="flex-center" style={{ height: "80px" }}>
-                  <CircularProgress />
-                </div>
-              ) : (
-                sortedData.map((rowData, index) => (
-                  <li
-                    className="body"
-                    key={index}
-                    style={{
-                      backgroundColor: index % 2 === 0 ? "#f5f7f9" : "white",
-                      display: "flex",
-                      borderBottom: "1px solid black",
-                      color: "black",
-                      fontSize: isMobile ? "11px" : "14px",
-                    }}
-                  >
-                    <span style={{ textAlign: "left" }}>{rowData.JDYear}</span>
-                    <span style={{ textAlign: "left" }}>
-                      {rowData.Salary.toLocaleString("en-US", {
-                        style: "currency",
-                        currency: "USD",
-                        minimumFractionDigits: 0,
-                        maximumFractionDigits: 0,
-                      })}
-                    </span>
-                    <span style={{ textAlign: "left" }}>
-                      {rowData.Bonuses.toLocaleString("en-US", {
-                        style: "currency",
-                        currency: "USD",
-                        minimumFractionDigits: 0,
-                        maximumFractionDigits: 0,
-                      })}
-                    </span>
-                    <span style={{ textAlign: "left" }}>
-                      {rowData.PracticeArea}
-                    </span>
-                    <span style={{ textAlign: "left" }}>
-                      {rowData.FirmSize}
-                    </span>
-                    <span style={{ textAlign: "left" }}>{rowData.Title}</span>
-                    <span style={{ textAlign: "left" }}>{rowData.City}</span>
-                    <span style={{ textAlign: "left" }}>{rowData.State}</span>
-                    <span style={{ textAlign: "left" }}>{rowData.Gender}</span>
-                    <span style={{ textAlign: "left" }}>
-                      {rowData.Date_Documented
-                        ? new Date(rowData.Date_Documented).toLocaleDateString(
-                            "en-US",
-                            {
-                              month: "2-digit",
-                              day: "2-digit",
-                              year: "numeric",
-                            }
-                          )
-                        : "-"}
-                    </span>
-                  </li>
-                ))
-              )}
-            </ul>
+            {renderTable()}
           </div>
+
+          <Pagination
+            count={totalPages}
+            page={page}
+            onChange={handlePageChange}
+            sx={{
+              marginTop: "20px",
+              "& .MuiPaginationItem-root": {
+                color: "white",
+                backgroundColor: "#808080",
+              },
+              "& .MuiPaginationItem-page.Mui-selected": {
+                backgroundColor: "#4739ff",
+              },
+              "& .MuiPaginationItem-page:hover": {
+                backgroundColor: "#4739ff",
+                opacity: 0.8,
+              },
+              "& .MuiPaginationItem-previousNext": {
+                backgroundColor: "#4739ff",
+                borderRadius: "50%",
+                "&:hover": {
+                  opacity: 0.8,
+                },
+              },
+            }}
+          />
         </div>
       )}
     </div>
