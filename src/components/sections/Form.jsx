@@ -51,21 +51,17 @@ function Form() {
 
   return (
     <div className=" text-black">
-      <Box
-        sx={{
-          maxWidth: isMobile ? "95%" : "100%",
-        }}
-      >
+      <Box>
         {!hasContributed ? (
           <div className="bg-white text-black flex flex-col items-center justify-center pt-24">
-            <Box sx={{ maxWidth: "60%", margin: "0 auto" }}>
-              <h3 className="text-[56px] font-bold text-[#212529] text-center">
+            <div className="lg:max-w-[60%] max-w-[90%] mx-auto">
+              <h3 className="lg:text-[56px] text-[36px] font-bold text-[#212529] text-center">
                 {totalEntries.toLocaleString()} attorneys (and counting) have
                 shared their salaries so far
               </h3>
-            </Box>
-            <div className="flex-center max-w-[800px] mx-auto">
-              <p className="text-[25px] font-[300] text-[#545659]">
+            </div>
+            <div className="flex-center lg:max-w-[800px] max-w-[400px] mx-auto">
+              <p className="lg:text-[25px] text-[16px] font-[300] text-[#545659] text-center">
                 It only takes seconds. Your contribution is{" "}
                 <strong>100% anonymous No names, no tracking </strong>.— just
                 the raw numbers that help everyone.{" "}
