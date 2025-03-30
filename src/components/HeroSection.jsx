@@ -12,7 +12,7 @@ function HeroSection() {
         What Are Other Attorneys With Your Experience Making?
       </h1>
       <div className="flex-center">
-        <h4 className="fw-medium mt-5 mb-5 text-[22px] text-center">
+        <h4 className="fw-medium mt-5 mb-5 lg:text-[22px] text-[16px] text-center">
           Add Your Anonymous Salary To Find Out!
         </h4>
       </div>
