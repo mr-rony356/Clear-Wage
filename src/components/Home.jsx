@@ -14,25 +14,18 @@ function Home() {
           className={`${isContributed ? "bg-opacity-result" : "bg-opacity"}`}
         >
           <div className="relative z-10">
-            <MainSection>
-              {!isContributed && <HeroSection />}
-            </MainSection>
+            <MainSection>{!isContributed && <HeroSection />}</MainSection>
           </div>
           {!isContributed && (
-            <div
-              style={{
-                maxWidth: "1320px",
-                margin: "0 auto",
-                paddingBottom: "80px",
-              }}
-            >
+            <div className="w-[82%] max-w-[1100px] mx-auto pb-[80px]">
               <img
-                src="https://dynabritesystems.com/cw/demos/saas/images/hero.png"
+                src="/table.png"
                 alt="hero-bg"
                 style={{
                   width: "100%",
                   height: "100%",
                   objectFit: "contain",
+                  borderRadius: "20px",
                 }}
               />
             </div>
