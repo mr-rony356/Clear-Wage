@@ -627,7 +627,7 @@ const Results = () => {
                 className="display-4 fw-bolder mb-3 position-relative text-center"
                 style={{ maxWidth: "900px", margin: "0 auto" }}
               >
-                {filteredData.length} attorneys (and counting) have shared their
+                {tableData.length} attorneys (and counting) have shared their
                 salaries so far
               </h3>
             </div>
