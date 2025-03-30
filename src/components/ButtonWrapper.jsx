@@ -13,7 +13,6 @@ const ButtonContainer = styled("div")(({ theme }) => ({
     width: "100%",
     maxWidth: "340px",
   },
-  marginBottom: "40px",
 }));
 
 // The actual button without a border
@@ -57,7 +56,7 @@ const ButtonBorder = styled("div")({
   right: -6,
   bottom: -6,
   borderRadius: "0.405rem",
-  border: "2px solid #473AFF",
+  border: "1px solid #473AFF",
   pointerEvents: "none",
   transition: "border-color 0.3s",
   zIndex: 0,

@@ -2,8 +2,8 @@ import React from "react";
 
 const ClearWageComponent = () => {
   return (
-    <div className="bg-white text-black py-8 md:py-12 pb-16 md:pb-24">
-      <div className="lg:max-w-[1240px] max-w-[90%] mx-auto px-4">
+    <div className="bg-white text-black py-8 md:py-14 pb-16 md:pb-24 mt-5">
+      <div className="lg:max-w-[1260px] max-w-[95%] mx-auto px-4">
         <div className="relative mx-auto lg:p-15 p-4 md:p-8 rounded-lg shadow-lg z-50 bg-[#fafafa]">
           {/* Outer layer - lightest blue */}
           <div className="absolute -left-4 md:-left-8 -bottom-8 w-4 md:w-8 h-full bg-[#E6ECF7] rounded-sm"></div>
@@ -26,9 +26,12 @@ const ClearWageComponent = () => {
               </p>
 
               <div className="mt-8 md:mt-12">
-                <p className="text-[#000000] italic">
+                <a
+                  href="https://holtzandbernard.com/"
+                  className="text-[#000000] italic"
+                >
                   Learn More About Holtz & Bernard
-                </p>
+                </a>
               </div>
             </div>
           </div>

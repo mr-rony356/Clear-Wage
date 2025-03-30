@@ -19,6 +19,7 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { FormControl, InputLabel } from "@mui/material";
+import ButtonStyled from "../ButtonWrapper";
 
 const Results = () => {
   const theme = useTheme();
@@ -81,6 +82,7 @@ const Results = () => {
           "https://script.google.com/macros/s/AKfycbxWJzD7pTYLpFvgi_Y7PuLhKCpbUAW9FR_TLupd-HoIkJVqcknqw7KRfrWf3O5XxsU/exec"
         );
         const data = await response.json();
+        console.log(data);
         setTableData(data);
         setLoading(false);
       } catch (error) {
@@ -141,38 +143,29 @@ const Results = () => {
   });
 
   // Sort table data based on the selected option
-  const sortedData = filteredData.sort((a, b) => {
-    if (!sortField) {
-      // Return the data as it is if sortField is empty
-      return 0;
-    }
-
-    if (
-      sortField === "Salary" ||
-      sortField === "Bonuses" ||
-      sortField === "JDYear"
-    ) {
-      return parseFloat(a[sortField]) - parseFloat(b[sortField]);
-    } else if (sortField === "Date") {
-      // Parse dates before comparison
-      const dateA = a.Date_Documented
-        ? new Date(a.Date_Documented)
-        : new Date("1970-01-01"); // Move empty dates to the start
-      const dateB = b.Date_Documented
-        ? new Date(b.Date_Documented)
-        : new Date("1970-01-01");
-      return dateB - dateA; // Reverse date order, newest first
-    } else {
-      return a[sortField].localeCompare(b[sortField]);
-    }
-  });
+  const sortedData = sortField
+    ? filteredData.sort((a, b) => {
+        if (
+          sortField === "Salary" ||
+          sortField === "Bonuses" ||
+          sortField === "JDYear"
+        ) {
+          return parseFloat(b[sortField]) - parseFloat(a[sortField]);
+        } else if (sortField === "Date") {
+          const dateA = new Date(a.Date_Documented || "1970-01-01");
+          const dateB = new Date(b.Date_Documented || "1970-01-01");
+          return dateB - dateA;
+        } else {
+          return b[sortField].localeCompare(a[sortField]);
+        }
+      })
+    : filteredData; // If no sort field, use filtered data as-is
 
   // Modify the sortedData to only show last 100 results
-  const limitedData = sortedData.slice(-100);
 
   // Calculate pagination
-  const totalPages = Math.ceil(limitedData.length / rowsPerPage);
-  const currentPageData = limitedData.slice(
+  const totalPages = Math.ceil(sortedData.length / rowsPerPage);
+  const currentPageData = sortedData.slice(
     (page - 1) * rowsPerPage,
     page * rowsPerPage
   );
@@ -229,18 +222,50 @@ const Results = () => {
     padding: isMobile ? "8px 4px" : "16px 8px",
   };
 
+  // Add these styles
+  const tableContainerStyle = {
+    backgroundColor: "#1e1e1e", // Dark background
+    width: "98%",
+    borderRadius: "4px",
+    overflowX: "auto",
+    margin: "0 auto",
+  };
+
+  const tableHeaderStyle = {
+    "& th": {
+      backgroundColor: "#2c2c2c", // Slightly lighter than container
+      color: "#fff",
+      fontWeight: 500,
+      padding: "16px",
+      borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+      "&:hover": {
+        backgroundColor: "#383838",
+      },
+    },
+  };
+
+  const tableRowStyle = {
+    "& td": {
+      color: "#fff",
+      padding: "16px",
+      borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+    },
+    "&:nth-of-type(odd)": {
+      backgroundColor: "#262626",
+    },
+    "&:nth-of-type(even)": {
+      backgroundColor: "#1e1e1e",
+    },
+    "&:hover": {
+      backgroundColor: "#383838",
+    },
+  };
+
   // Replace the existing table JSX with this new version
   const renderTable = () => (
-    <TableContainer
-      component={Paper}
-      sx={{
-        backgroundColor: "#1a1a1a",
-        maxWidth: isMobile ? "100vw" : "100%",
-        overflowX: "auto",
-      }}
-    >
-      <Table sx={{ minWidth: 650 }}>
-        <TableHead>
+    <TableContainer component={Paper} sx={tableContainerStyle}>
+      <Table>
+        <TableHead sx={tableHeaderStyle}>
           <TableRow>
             <TableCell sx={headerCellStyle}>JD Year</TableCell>
             <TableCell sx={headerCellStyle}>Salary</TableCell>
@@ -263,13 +288,7 @@ const Results = () => {
             </TableRow>
           ) : (
             currentPageData.map((rowData, index) => (
-              <TableRow
-                key={index}
-                sx={{
-                  backgroundColor: index % 2 === 0 ? "#2a2a2a" : "#333333",
-                  "&:hover": { backgroundColor: "#404040" },
-                }}
-              >
+              <TableRow key={index} sx={tableRowStyle}>
                 <TableCell sx={bodyCellStyle}>{rowData.JDYear}</TableCell>
                 <TableCell sx={bodyCellStyle}>
                   {rowData.Salary.toLocaleString("en-US", {
@@ -329,29 +348,41 @@ const Results = () => {
             alignItems: "center",
             textAlign: "center",
             gap: "20px",
-            margin: isMobile ? "20px 5px" : "50px 0 ",
+            margin: isMobile ? "20px 0px" : "50px 0 ",
           }}
         >
-          <Typography
-            sx={{ fontSize: "20px", color: "black", marginTop: "20px" }}
+          <h1
+            className="text-black"
+            style={{
+              fontSize: isMobile ? "36px" : "56px",
+              color: "black",
+              fontWeight: "700",
+              marginTop: isMobile ? "2rem" : "6rem",
+            }}
+          >
+            {filteredData.length} Results
+          </h1>
+
+          <p
+            className="text-black"
+            style={{
+              fontSize: isMobile ? "20px" : "25px",
+              marginBottom: "20px",
+              letterSpacing: "0.03em",
+              fontWeight: "300",
+              margin: "0 10px",
+            }}
           >
             Separate keywords by commas to narrow your search
-          </Typography>
-          {!isMobile && (
-            <Typography
-              sx={{ fontSize: "56px", color: "black", fontWeight: "bold" }}
-            >
-              {filteredData.length} Results
-            </Typography>
-          )}
+          </p>
           <div
-            style={{ width: isMobile ? "80%" : "30%", position: "relative" }}
+            style={{ width: isMobile ? "95%" : "40%", position: "relative" }}
           >
             <TextField
               fullWidth
               placeholder={
                 isMobile
-                  ? "Search keywords..."
+                  ? "Search keywords... eg: 2018, Commercial Litigation, Associate"
                   : "Search keywords eg: 2018, Commercial Litigation, Associate"
               }
               value={searchQuery}
@@ -360,9 +391,10 @@ const Results = () => {
               sx={{
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
-                    borderColor: "gray",
+                    border: "none",
                   },
                   borderRadius: "50px",
+                  boxShadow: "0 2px 10px 2px rgba(0, 0, 0, 0.15)",
                   padding: "5px",
                   "&::placeholder": {
                     fontSize: isMobile ? "8px" : "14px",
@@ -543,18 +575,6 @@ const Results = () => {
               </Select>
             </FormControl>
           </div>
-          {isMobile && (
-            <div style={{ width: "100%", textAlign: "center" }}>
-              <Typography
-                sx={{ fontSize: "40px", color: "black", fontWeight: "bold" }}
-              >
-                {filteredData.length} Results
-              </Typography>
-              <Typography sx={{ fontSize: "12px", color: "black" }}>
-                Swipe left to view full data
-              </Typography>
-            </div>
-          )}
 
           <div
             ref={tableRef}
@@ -596,6 +616,37 @@ const Results = () => {
               },
             }}
           />
+          <div className="bg-white text-black flex flex-col items-center justify-center lg:pt-24 pt-12">
+            <p className="text-center text-black font-bold mb-4">
+              Please Add Your Salary If You Haven't Already
+            </p>
+            <div className="mx-auto">
+              <h3
+                className="display-4 fw-bolder mb-3 position-relative text-center"
+                style={{ maxWidth: "900px", margin: "0 auto" }}
+              >
+                {filteredData.length} attorneys (and counting) have shared their
+                salaries so far
+              </h3>
+            </div>
+            <div className="flex-center lg:max-w-[800px] max-w-[400px] mx-auto">
+              <p
+                className="mb-5 lead text-center"
+                style={{
+                  fontSize: "25px",
+                  maxWidth: "800px",
+                  margin: "0 auto",
+                }}
+              >
+                It only takes seconds. Your contribution is{" "}
+                <strong>100% anonymous No names, no tracking </strong>— just the
+                raw numbers that help everyone.{" "}
+              </p>
+            </div>
+            <ButtonStyled openModal={true} bgColor="#b59658">
+              Add Salary Data →
+            </ButtonStyled>
+          </div>
         </div>
       )}
     </div>

@@ -75,7 +75,9 @@ const About = () => {
           </div>
         </div>
       </Box>
-      <CompanyFooter />
+      <div className="-mt-14">
+        <CompanyFooter />
+      </div>
     </Box>
   );
 };

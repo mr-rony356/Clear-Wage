@@ -30,7 +30,6 @@ import emailjs from "emailjs-com";
 const FORM_STEPS = [
   {
     id: 1,
-    title: "Financial Information",
     fields: [
       {
         id: "Salary",
@@ -67,7 +66,6 @@ const FORM_STEPS = [
   },
   {
     id: 2,
-    title: "Professional Information",
     fields: [
       {
         id: "Title",
@@ -194,7 +192,6 @@ const FORM_STEPS = [
   },
   {
     id: 3,
-    title: "Firm Information",
     fields: [
       {
         id: "FirmSize",
@@ -471,31 +468,15 @@ function Modal({ open, onClose }) {
                 ))}
               </Stepper>
             </Box>
-            <Typography variant="h6" component="div">
-              {FORM_STEPS[step - 1].title}
-            </Typography>
           </DialogTitle>
           <DialogContent dividers>
             {FORM_STEPS[step - 1].fields.map((fieldConfig) => (
               <Box key={fieldConfig.id} sx={{ mb: 2 }}>
-                {fieldConfig.title && (
+                {/* {fieldConfig.title && (
                   <Typography variant="subtitle1" sx={{ mb: 1 }}>
                     {fieldConfig.title}
-                    {fieldConfig.description && (
-                      <Typography
-                        component="span"
-                        sx={{
-                          fontSize: "0.8rem",
-                          color: "text.secondary",
-                          display: "block",
-                          mt: 0.5,
-                        }}
-                      >
-                        ({fieldConfig.description})
-                      </Typography>
-                    )}
                   </Typography>
-                )}
+                )} */}
                 <FormField
                   fieldConfig={fieldConfig}
                   formData={formData}

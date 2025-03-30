@@ -6,43 +6,50 @@ import HeroSection from "./HeroSection";
 import Form from "./sections/Form.jsx";
 import MainSection from "./sections/MainSection";
 import Results from "./sections/Results.jsx";
+import ScrollToTop from "./ScrollToTop";
 
 function Home() {
+  const isContributed = localStorage.getItem("hasContributed");
   return (
     <>
-      <div className="bg-hexon">
-        <div className="bg-opacity">
+      <div className={` ${isContributed ? "bg-hexon-result" : "bg-hexon"}`}>
+        <div
+          className={`${isContributed ? "bg-opacity-result" : "bg-opacity"}`}
+        >
           <div className="relative z-10">
             <MainSection>
               <DrawerAppBar />
-              <HeroSection />
+              {!isContributed && <HeroSection />}
             </MainSection>
           </div>
-          <div
-            style={{
-              maxWidth: "1320px",
-              margin: "0 auto",
-              paddingBottom: "80px",
-            }}
-          >
-            <img
-              src="https://dynabritesystems.com/cw/demos/saas/images/hero.png"
-              alt="hero-bg"
+          {!isContributed && (
+            <div
               style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "contain",
+                maxWidth: "1320px",
+                margin: "0 auto",
+                paddingBottom: "80px",
               }}
-            />
-          </div>
+            >
+              <img
+                src="https://dynabritesystems.com/cw/demos/saas/images/hero.png"
+                alt="hero-bg"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "contain",
+                }}
+              />
+            </div>
+          )}
           <Form></Form>
         </div>
       </div>
 
       <Results></Results>
-      <div className="bg-white -mt-6 lg:-mt-16">
+      <div className="bg-white -mt-12 lg:-mt-14">
         <ClearWageComponent />
       </div>
+      <ScrollToTop />
     </>
   );
 }

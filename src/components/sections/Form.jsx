@@ -43,6 +43,7 @@ function Form() {
   const handleContributionStatus = () => {
     localStorage.setItem("hasContributed", "true");
     setHasContributed(true);
+    window.location.reload();
     window.scrollTo({
       top: document.getElementById("last").offsetTop,
       behavior: "smooth",
@@ -55,20 +56,30 @@ function Form() {
         {!hasContributed ? (
           <div className="bg-white text-black flex flex-col items-center justify-center pt-24">
             <div className="lg:max-w-[60%] max-w-[90%] mx-auto">
-              <h3 className="lg:text-[56px] text-[36px] font-bold text-[#212529] text-center">
+              <h3
+                className="display-4 fw-bolder mb-3 position-relative text-center"
+                style={{ maxWidth: "900px", margin: "0 auto" }}
+              >
                 {totalEntries.toLocaleString()} attorneys (and counting) have
                 shared their salaries so far
               </h3>
             </div>
             <div className="flex-center lg:max-w-[800px] max-w-[400px] mx-auto">
-              <p className="lg:text-[25px] text-[16px] font-[300] text-[#545659] text-center">
+              <p
+                className="mb-5 lead text-center"
+                style={{
+                  fontSize: "25px",
+                  maxWidth: "800px",
+                  margin: "0 auto",
+                }}
+              >
                 It only takes seconds. Your contribution is{" "}
-                <strong>100% anonymous No names, no tracking </strong>.— just
-                the raw numbers that help everyone.{" "}
+                <strong>100% anonymous No names, no tracking </strong>— just the
+                raw numbers that help everyone.{" "}
               </p>
             </div>
             <ButtonStyled openModal={true} bgColor="#b59658">
-              Unlock Salary Data Now →
+              🔓 Unlock Salary Data →
             </ButtonStyled>
             <div
               onClick={handleContributionStatus}
@@ -82,22 +93,20 @@ function Form() {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center">
-            <h1 className="text-[28px] lg:text-[64px] font-bold text-[#212529] text-white text-center">
+          <div className="flex flex-col items-center justify-center lg:mt-[7rem] lg:pb-14">
+            <h1 className="display-3 fw-bolder text-white mt-5 mb-5 text-center max-w-[850px] mx-aut">
               Get Salary Trends & <br /> Industry Insights Monthly{" "}
             </h1>
-            <Box
-              sx={{ display: "flex", justifyContent: "center", width: "100%" }}
-            >
+            <div className="flex justify-center w-full">
               <iframe
                 src="https://embeds.beehiiv.com/8e601ff8-0da2-4be5-ae6a-34be5be2e922?slim=true"
                 data-test-id="beehiiv-embed"
                 height="52"
                 frameBorder="0"
                 scrolling="no"
-                className="m-0 !rounded-none bg-transparent w-full lg:max-w-[500px] max-w-[350px] mt-5"
+                className="m-0 !rounded-none bg-transparent w-full lg:max-w-[500px] max-w-[350px]"
               />
-            </Box>
+            </div>
             <i>
               <p
                 style={{

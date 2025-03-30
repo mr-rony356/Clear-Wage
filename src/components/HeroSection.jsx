@@ -3,38 +3,22 @@ import { styled, useTheme, useMediaQuery, Button } from "@mui/material";
 import ButtonStyled from "./ButtonWrapper";
 
 function HeroSection() {
-  const handleContributionStatus = () => {
-    localStorage.setItem("hasContributed", "true");
-    window.scrollTo({
-      top: document.getElementById("last").offsetTop,
-      behavior: "smooth",
-    });
-  };
-
   return (
     <div className="flex flex-col items-center justify-center  mt-[80px] mb-[30px]">
-      <h1 className="lg:text-[80px] text-[49px] font-[700] text-center w-full lg:max-w-[800px] leading-[1.3]">
+      <h1
+        className="display-1 fw-bolder mt-5  mx-auto text-center"
+        style={{ maxWidth: "850px", margin: "0 auto" }}
+      >
         What Are Other Attorneys With Your Experience Making?
       </h1>
       <div className="flex-center">
-        <p className="lg:text-[22px] text-[16px] font-[500] my-[48px]">
+        <h4 className="fw-medium mt-5 mb-5 text-[22px] text-center">
           Add Your Anonymous Salary To Find Out!
-        </p>
+        </h4>
       </div>
       <ButtonStyled openModal={true} bgColor="#473AFF">
         🔓 Unlock Salary Data →
       </ButtonStyled>
-      {/* <div
-        onClick={handleContributionStatus}
-        style={{
-          fontSize: ".8rem",
-          fontWeight: "bold",
-          textDecoration: "underline",
-          cursor: "pointer",
-        }}
-      >
-        I already added my salary →
-      </div> */}
     </div>
   );
 }
