@@ -349,6 +349,7 @@ const Results = () => {
             textAlign: "center",
             gap: "20px",
             margin: isMobile ? "20px 0px" : "50px 0 ",
+            zIndex: "-1",
           }}
         >
           <h1
