@@ -10,8 +10,10 @@ const ButtonContainer = styled("div")(({ theme }) => ({
   display: "inline-block",
   margin: "20px",
   [theme.breakpoints.down("sm")]: {
-    width: "85%",
+    width: "100%",
+    maxWidth: "340px",
   },
+  marginBottom: "40px",
 }));
 
 // The actual button without a border
@@ -24,10 +26,12 @@ const ButtonWrapper = styled("button")(({ theme }) => ({
   backgroundColor: "#473AFF",
   padding: "16px 48px",
   cursor: "pointer",
-  width: "100%",
+  [theme.breakpoints.down("sm")]: {
+    width: "100%",
+    fontSize: "18px",
+  },
   display: "flex",
   alignItems: "center",
-
   justifyContent: "center",
   gap: "12px",
   transition: "background-color 0.3s, transform 0.2s",
@@ -35,9 +39,6 @@ const ButtonWrapper = styled("button")(({ theme }) => ({
   outline: "none",
   position: "relative",
   zIndex: 1,
-  [theme.breakpoints.down("sm")]: {
-    padding: "15px 25px",
-  },
   "&:hover": {
     backgroundColor: "#2a2ad1",
     transform: "translateY(-2px)",
