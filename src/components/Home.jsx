@@ -25,7 +25,8 @@ function Home() {
                   width: "100%",
                   height: "100%",
                   objectFit: "contain",
-                  borderRadius: "20px",
+                  borderRadius: "15px",
+                  border: "1px solid gray",
                 }}
               />
             </div>
