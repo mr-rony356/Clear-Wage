@@ -14,7 +14,7 @@ function DrawerAppBar() {
 
   return (
     <header className="relative z-[1000]">
-      <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-[70px] py-[18px]">
+      <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-[70px] lg:py-[18px] py-[8px]">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <div className="md:flex-1 md:ml-[180px]">
@@ -56,13 +56,13 @@ function DrawerAppBar() {
 
       {/* Mobile Navigation */}
       <div
-        className={`md:hidden fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-300 ease-in-out ${
+        className={`md:hidden fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-300 ease-in-out z-[9999] ${
           mobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
         onClick={toggleMobileMenu}
       >
         <div
-          className={`fixed inset-x-0 bottom-0 bg-gradient-to-b from-gray-900 to-black transform transition-transform duration-300 ease-in-out ${
+          className={`fixed inset-x-0 bottom-0 bg-gradient-to-b from-gray-900 to-black transform transition-transform duration-300 ease-in-out z-[10000] ${
             mobileMenuOpen ? "translate-y-0" : "translate-y-full"
           }`}
           onClick={(e) => e.stopPropagation()}

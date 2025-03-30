@@ -1,12 +1,9 @@
-import { Typography, Container, Box, Button } from "@mui/material";
-import { Link } from "react-router-dom";
-import DrawerAppBar from "./AppBar";
+import { Container, Box } from "@mui/material";
 import CompanyFooter from "./CompanyFooter";
 
 const Privacy = () => {
   return (
     <div>
-      <DrawerAppBar />
       <Box
         sx={{
           margin: "0 auto",

@@ -4,9 +4,9 @@ import ButtonStyled from "./ButtonWrapper";
 
 function HeroSection() {
   return (
-    <div className="flex flex-col items-center justify-center  mt-[80px] mb-[30px]">
+    <div className="flex flex-col items-center justify-center  lg:mt-[80px] mb-[30px]">
       <h1
-        className="display-1 fw-bolder mt-5  mx-auto text-center"
+        className="display-1 fw-bolder lg:mt-5 !mt-[48px] mx-auto text-center"
         style={{ maxWidth: "850px", margin: "0 auto" }}
       >
         What Are Other Attorneys With Your Experience Making?

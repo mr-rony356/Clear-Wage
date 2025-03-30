@@ -229,6 +229,7 @@ const Results = () => {
     borderRadius: "4px",
     overflowX: "auto",
     margin: "0 auto",
+    marginTop: "18px",
   };
 
   const tableHeaderStyle = {
@@ -335,7 +336,7 @@ const Results = () => {
   );
 
   return (
-    <div id="last" ref={lastSectionRef}>
+    <div id="last" ref={lastSectionRef} className="relative z-[1]">
       {!hasContributed ? (
         <div style={{ textAlign: "center", width: "100%" }}></div>
       ) : (
@@ -349,7 +350,7 @@ const Results = () => {
             textAlign: "center",
             gap: "20px",
             margin: isMobile ? "20px 0px" : "50px 0 ",
-            zIndex: "-1",
+            zIndex: "1",
           }}
         >
           <h1

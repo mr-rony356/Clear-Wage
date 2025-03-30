@@ -54,8 +54,8 @@ function Form() {
     <div className=" text-black">
       <Box>
         {!hasContributed ? (
-          <div className="bg-white text-black flex flex-col items-center justify-center pt-24">
-            <div className="lg:max-w-[60%] max-w-[90%] mx-auto">
+          <div className="bg-white text-black flex flex-col items-center justify-center lg:pt-24 pt-12">
+            <div className="lg:max-w-[60%] max-w-[95%] mx-auto">
               <h3
                 className="display-4 fw-bolder mb-3 position-relative text-center"
                 style={{ maxWidth: "900px", margin: "0 auto" }}

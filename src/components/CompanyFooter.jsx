@@ -16,11 +16,11 @@ const ClearWageComponent = () => {
           {/* Content container with white background */}
           <div className="relative rounded-lg z-20">
             <div className="text-center">
-              <h1 className="text-[22px] md:text-[28px] font-normal mb-4 md:mb-6">
+              <h1 className="text-[22px] md:text-[28px] font-normal mb-4 md:mb-6 mx-5 lg:mx-0">
                 ClearWage is powered by Holtz & Bernard LLC
               </h1>
 
-              <p className="text-[16px] md:text-[20px] font-[300] text-center lg:max-w-2xl max-w-[90%] mx-auto mb-6 md:mb-8 text-[#707070]">
+              <p className="text-[18px] md:text-[20px] font-[300] text-center lg:max-w-2xl max-w-[90%] mx-auto mb-8 text-[#707070]">
                 An attorney placement agency in Miami, FL on a mission to be the
                 most valuable career contact for attorneys and law firms.
               </p>

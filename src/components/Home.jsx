@@ -1,7 +1,4 @@
-import DrawerAppBar from "./AppBar";
 import ClearWageComponent from "./CompanyFooter.jsx";
-import CompanyFooter from "./CompanyFooter.jsx";
-import Footer from "./Footer.jsx";
 import HeroSection from "./HeroSection";
 import Form from "./sections/Form.jsx";
 import MainSection from "./sections/MainSection";
@@ -18,7 +15,6 @@ function Home() {
         >
           <div className="relative z-10">
             <MainSection>
-              <DrawerAppBar />
               {!isContributed && <HeroSection />}
             </MainSection>
           </div>
