@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/system";
-import { Subtitle, Title } from "../HeroSection";
 import { useTheme, useMediaQuery, Button } from "@mui/material";
-import ButtonStyled from "../ButtonWrapper ";
+import ButtonStyled from "../ButtonWrapper";
 
 const MiuiSection = styled(Box)({
-  background: "#022124",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -45,6 +43,7 @@ function Form() {
   const handleContributionStatus = () => {
     localStorage.setItem("hasContributed", "true");
     setHasContributed(true);
+    window.location.reload();
     window.scrollTo({
       top: document.getElementById("last").offsetTop,
       behavior: "smooth",
@@ -52,84 +51,77 @@ function Form() {
   };
 
   return (
-    <MiuiSection>
-      <Box
-        sx={{
-          maxWidth: isMobile ? "95%" : "70%",
-        }}
-      >
+    <div className=" text-black">
+      <Box>
         {!hasContributed ? (
-          <>
-            <Box sx={{ maxWidth: "850px", margin: "0 auto" }}>
-              <Title>
+          <div className="bg-white text-black flex flex-col items-center justify-center lg:pt-24 pt-12">
+            <div className="lg:max-w-[60%] max-w-[95%] mx-auto">
+              <h3
+                className="display-4 fw-bolder mb-3 position-relative text-center"
+                style={{ maxWidth: "900px", margin: "0 auto" }}
+              >
                 {totalEntries.toLocaleString()} attorneys (and counting) have
-                shared their salaries to create the most powerful attorney
-                salary database
-              </Title>
-            </Box>
-            <div className="flex-center">
-              <Subtitle style={{ maxWidth: "650px" }}>
-                <strong>
-                  See How Your Salary Stacks Up Against Other Attorneys
-                </strong>
-                <br /> <br />
-                It only takes seconds. Your contribution is 100% anonymous. No
-                names, no tracking—just the raw numbers that help everyone. And
-                the knowledge you gain could mean thousands more in your next
-                paycheck. <br /> <br /> Don't be left in the dark—Enter your
-                salary now and unlock instant access.
-              </Subtitle>
+                shared their salaries so far
+              </h3>
+            </div>
+            <div className="flex-center lg:max-w-[800px] max-w-[400px] mx-auto">
+              <p
+                className="mb-5 lead text-center"
+                style={{
+                  fontSize: "25px",
+                  maxWidth: "800px",
+                  margin: "0 auto",
+                }}
+              >
+                It only takes seconds. Your contribution is{" "}
+                <strong>100% anonymous No names, no tracking </strong>— just the
+                raw numbers that help everyone.{" "}
+              </p>
             </div>
             <ButtonStyled openModal={true} bgColor="#b59658">
-              Unlock Salary Data Now →
+              🔓 Unlock Salary Data →
             </ButtonStyled>
             <div
               onClick={handleContributionStatus}
               style={{
                 fontSize: ".8rem",
-                fontWeight: "bold",
-                textDecoration: "underline",
                 cursor: "pointer",
+                color: "#7E8083",
               }}
             >
-              I already added my salary →
+              <i>I already added my salary →</i>
             </div>
-          </>
+          </div>
         ) : (
-          <>
-            <h1
-              style={{
-                fontWeight: "bold",
-                color: "#b59658",
-                fontSize: isMobile ? "1.5rem" : "2rem",
-                marginBottom: "10px",
-              }}
-            >
-              Get Exclusive Salary Trends & Industry Insights Monthly
+          <div className="flex flex-col items-center justify-center lg:mt-[7rem] lg:pb-14">
+            <h1 className="display-3 fw-bolder text-white mt-5 mb-5 text-center max-w-[850px] mx-aut">
+              Get Salary Trends & <br /> Industry Insights Monthly{" "}
             </h1>
+            <div className="flex justify-center w-full">
+              <iframe
+                src="https://embeds.beehiiv.com/8e601ff8-0da2-4be5-ae6a-34be5be2e922?slim=true"
+                data-test-id="beehiiv-embed"
+                height="52"
+                frameBorder="0"
+                scrolling="no"
+                className="m-0 !rounded-none bg-transparent w-full lg:max-w-[500px] max-w-[350px]"
+              />
+            </div>
             <i>
-              <p style={{ fontSize: "12px", color: "white", marginBottom: "20px" }}>
+              <p
+                style={{
+                  fontSize: "12px",
+                  color: "white",
+                  margin: "20px 0",
+                }}
+              >
                 No spam, just pure value. Unsubscribe anytime.{" "}
               </p>
             </i>
-            <iframe
-              src="https://embeds.beehiiv.com/8e601ff8-0da2-4be5-ae6a-34be5be2e922?slim=true"
-              data-test-id="beehiiv-embed"
-              height="52"
-              frameBorder="0"
-              scrolling="no"
-              style={{
-                margin: 0,
-                borderRadius: "0px !important",
-                backgroundColor: "transparent",
-                width: "100%",
-                maxWidth: "500px",
-              }}
-            />
-          </>
+          </div>
         )}
       </Box>
-    </MiuiSection>
+    </div>
   );
 }
 

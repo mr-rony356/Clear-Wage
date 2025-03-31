@@ -1,73 +1,25 @@
 import React from "react";
 import { styled, useTheme, useMediaQuery, Button } from "@mui/material";
-import ButtonStyled from "./ButtonWrapper ";
-
-const HeroWrapper = styled("div")(({ theme }) => ({
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  textAlign: "center",
-  color: "white",
-  width: "95%",
-}));
-
-export const Title = styled("h1")(({ theme }) => ({
-  fontSize: theme.breakpoints.down("sm") ? "2.5rem" : "5rem",
-  marginBottom: "20px",
-  marginTop: "40px",
-  fontWeight: "900",
-  fontFamily: "Freight Black, Times New Roman, Times, serif",
-}));
-
-export const Subtitle = styled("p")({
-  fontSize: "1.1rem",
-  marginBottom: "30px",
-  maxWidth: "650px",
-  lineHeight: "28px",
-});
+import ButtonStyled from "./ButtonWrapper";
 
 function HeroSection() {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
-  const handleContributionStatus = () => {
-    localStorage.setItem("hasContributed", "true");
-    window.scrollTo({
-      top: document.getElementById("last").offsetTop,
-      behavior: "smooth",
-    });
-  };
-
   return (
-    <HeroWrapper>
-      <Title>
-        What Are Other Attorneys With <br /> Your Experience Making?
-      </Title>
-      <div className="flex-center">
-        <Subtitle style={{ maxWidth: isMobile ? "100%" : "70%" }}>
-          Add Your Anonymous Salary To Find Out!
-        </Subtitle>
-      </div>
-      <ButtonStyled openModal={true} bgColor="#b59658">
-        Unlock Salary Data Now →
-      </ButtonStyled>
-      <div
-        onClick={handleContributionStatus}
-        style={{
-          fontSize: ".8rem",
-          fontWeight: "bold",
-          textDecoration: "underline",
-          cursor: "pointer",
-        }}
+    <div className="flex flex-col items-center justify-center  lg:mt-[80px] mb-[30px]">
+      <h1
+        className="display-1 fw-bolder lg:mt-5 !mt-[48px] mx-auto text-center"
+        style={{ maxWidth: "850px", margin: "0 auto" }}
       >
-        I already added my salary →
+        What Are Other Attorneys With Your Experience Making?
+      </h1>
+      <div className="flex-center">
+        <h4 className="fw-medium mt-5 mb-5 lg:text-[22px] text-[16px] text-center">
+          Add Your Anonymous Salary To Find Out!
+        </h4>
       </div>
-
-      {/* <ButtonStyled scrollToSection={true} bgColor="white">
-        View Data
-      </ButtonStyled> */}
-    </HeroWrapper>
+      <ButtonStyled openModal={true} bgColor="#473AFF">
+        🔓 Unlock Salary Data →
+      </ButtonStyled>
+    </div>
   );
 }
 

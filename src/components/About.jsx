@@ -1,88 +1,80 @@
 import { Typography, Container, Box, Button } from "@mui/material";
-import { Link } from "react-router-dom";
-import DrawerAppBar from "./AppBar";
+import CompanyFooter from "./CompanyFooter";
 
 const About = () => {
   return (
-    <Box sx={{ backgroundColor: "black", maxWidth: "100%" }}>
-      <DrawerAppBar />
+    <Box>
       <Box
         sx={{
-          maxWidth: "750px",
           margin: "0 auto",
-          padding: "0 20px",
           color: "white",
         }}
       >
-        <Typography variant="h3" sx={{  mb: "50px",mt: "100px" }}>
-          About
-        </Typography>
+        <h1 className="lg:text-[80px] text-[46px] font-bold  my-24 text-center">
+          About ClearWage
+        </h1>
+        <div className="flex justify-center bg-white px-4 lg:px-0">
+          <div className="text-[20px] font-normal leading-[30px] bg-white text-black max-w-[600px] mx-auto">
+            <h1 className="lg:text-[56px] text-[36px] font-bold mb-10 mt-30 text-center">
+              About
+            </h1>
 
-        <Typography paragraph sx={{ mb: 3 }}>
-          My name is Chris Holtzhauer, and I've spent years watching attorneys
-          and firms struggle to figure out where to come in on salary—I built
-          ClearWage to fix that.
-        </Typography>
-
-        <Typography paragraph sx={{ mb: 3 }}>
-          Let's be real. Nobody talks about attorney salaries. It's all
-          whispers, vague guesses, and "it depends." Meanwhile, some attorneys
-          are underpaid and don't even know it, while others are negotiating
-          blind, hoping they don't leave money on the table.
-        </Typography>
-
-        <Typography paragraph sx={{ mb: 3 }}>
-          That's exactly why ClearWage exists.
-        </Typography>
-
-        <Typography paragraph sx={{ mb: 3 }}>
-          <strong>Here's how it works:</strong> You anonymously share your
-          salary info, and in return, you get access to everyone else's. No
-          games. No BS. Just real numbers from real attorneys, so you can see
-          exactly where you stand in the market.
-        </Typography>
-
-        <Typography paragraph sx={{ mb: 3 }}>
-          I run <strong>Holtz & Bernard</strong>, an attorney placement firm, and
-          I've seen firsthand how little transparency there is when it comes to
-          pay. Firms are guessing. Lawyers are guessing. And that's a problem.
-          When you don't know what the market is paying, you can't negotiate
-          effectively, and firms can't compete fairly.
-        </Typography>
-
-        <Typography paragraph sx={{ mb: 3 }}>
-          The solution? <strong>Real salary data straight from the source—you.</strong>
-        </Typography>
-
-        <Typography paragraph sx={{ mb: 3 }}>
-          So if you want access to real salary insights, take 60 seconds, drop
-          your numbers in, and unlock the data.
-        </Typography>
-
-        <Typography paragraph sx={{ mb: 3 }}>
-          No fluff. No fees. Just the truth.
-        </Typography>
-
-        <Typography paragraph sx={{ mb: 6 }}>
-          Welcome to Clear Wage.
-        </Typography>
-
-        <Button
-          component={Link}
-          to="/"
-          variant="contained"
-          sx={{ 
-            mb: "100px",
-            bgcolor: "#f5f5f5",
-            color: "black",
-            '&:hover': {
-              bgcolor: "#e0e0e0"
-            }
-          }}
-        >
-          Back To Home Page
-        </Button>
+            <p className="lead mb-5 op-9 text-[18px] font-[300] text-center">
+              My name's Chris Holtzhauer, founder of ClearWage. After years of
+              working with attorneys and watching them struggle to figure out
+              what they should be earning, I built ClearWage to solve the
+              problem.
+              <br />
+              <br />
+              Let's be real: nobody talks about salaries. It's all whispers,
+              vague guesses, and the dreaded: "It depends."
+              <br />
+              <br />
+              Here's what that leads to: Some attorneys are getting underpaid
+              and don't even realize it. Others are walking into negotiations
+              blind — hoping they don't leave money on the table.
+              <br />
+              <br />
+              That's insane. And that's why ClearWage exists. Here's how it
+              works: You share your salary anonymously. In return, you get
+              access to real data from other attorneys. No guesses. Just real
+              numbers from real people.
+              <br />
+              <br />
+              Without salary transparency, you can't negotiate effectively — and
+              firms can't compete fairly.
+              <br />
+              <br />
+              So if you want access to real salary insights, take 60 seconds,
+              drop your numbers in, and unlock the data.
+              <br />
+              <br />
+              No email form. No fees. Just the data.
+              <br />
+              <br />
+              Welcome to ClearWage.
+            </p>
+            {/* <Button
+              component={Link}
+              to="/"
+              variant="contained"
+              sx={{
+                mb: "100px",
+                bgcolor: "#f5f5f5",
+                color: "black",
+                "&:hover": {
+                  bgcolor: "#e0e0e0",
+                },
+              }}
+            >
+              Back To Home Page
+            </Button> */}
+          </div>
+        </div>
       </Box>
+      <div className="-mt-14">
+        <CompanyFooter />
+      </div>
     </Box>
   );
 };

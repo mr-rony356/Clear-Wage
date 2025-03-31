@@ -1,24 +1,36 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import DrawerAppBar from "./components/AppBar";
 import Home from "./components/Home";
 import { StepDataProvider } from "./context/stepsData"; // Importing StepDataProvider from your StepDataContext file
 import PrivacyPolicy from "./components/Privacy";
 import About from "./components/About";
 import Footer from "./components/Footer";
+import ScrollToTop from "./components/ScrollToTop";
+
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <StepDataProvider>
-        {" "}
-        {/* Wrap your App component with the StepDataProvider */}
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        </Routes>
+        <div className="relative">
+          {/* Navigation - highest z-index */}
+          <div className="relative z-[9999]">
+            <DrawerAppBar />
+          </div>
+          
+          {/* Main content - lower z-index */}
+          <div className="relative z-[1]">
+            <ScrollToTop />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            </Routes>
+          </div>
+        </div>
       </StepDataProvider>
       <Footer />
-    </BrowserRouter>
+    </Router>
   );
 }
 

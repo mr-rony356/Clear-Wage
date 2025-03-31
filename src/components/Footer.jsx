@@ -1,58 +1,19 @@
 import React from "react";
-import { styled } from "@mui/system";
-import { Link, Typography } from "@mui/material";
-
-const FooterWrapper = styled("footer")({
-  backgroundColor: "black",
-  color: "white",
-  textAlign: "center",
-  padding: "10px 0",
-  width: "100%",
-  fontSize: "14px",
-});
-
-const StyledLink = styled(Link)({
-  color: "white",
-  textDecoration: "underline",
-  "&:hover": {
-    color: "#b59658",
-  },
-});
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <FooterWrapper>
-      ClearWage is brought to you by{" "}
-      <StyledLink
-        href="https://holtzandbernard.com/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Holtz & Bernard LLC
-      </StyledLink>
-      , an attorney placement agency in Miami, FL that matches attorneys with
-      esteemed boutiques and AmLaw firms.{" "}
-      <StyledLink
-        href="https://share.hsforms.com/1Rx2UZr0VQK6j7tZ_wOo8Dw3kr97"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Have someone reach out to discuss opportunities.
-      </StyledLink>
-      <br /> <br />
-      <Typography>
-        How can we make clearwage even more valuable for you? Let us know at{" "}
-        <StyledLink href="mailto:hey@clearwage.co">
-          hey@clearwage.co.
-        </StyledLink>
-      </Typography>
-      <br />
-      <StyledLink href="/privacy-policy" rel="noopener noreferrer">
-        Privacy Policy
-      </StyledLink>{" "}
-      <br /> <br />
-      ©2025 ClearWage.co - All Rights Reserved
-    </FooterWrapper>
+    <footer className="bg-black text-white py-12 px-5  container mx-auto ">
+      <div className="max-w-[1320px] mx-auto flex justify-between lg:items-center text-sm flex-col lg:flex-row gap-6">
+        <div>Copyrights © 2025 clearwage.co - All Rights Reserved</div>
+        <Link
+          to="/privacy-policy"
+          className="text-white hover:text-[#b59658] hover:underline"
+        >
+          Privacy Policy
+        </Link>
+      </div>
+    </footer>
   );
 };
 
