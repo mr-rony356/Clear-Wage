@@ -445,6 +445,7 @@ function Modal({ open, onClose }) {
       );
       setShowPopup(false);
       onClose();
+      window.location.reload();
       window.scrollTo({
         top: document.getElementById("last").offsetTop,
         behavior: "smooth",
