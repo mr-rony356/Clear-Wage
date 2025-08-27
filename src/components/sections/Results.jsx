@@ -78,15 +78,17 @@ const Results = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const response = await fetch(
-          "https://script.google.com/macros/s/AKfycbxWJzD7pTYLpFvgi_Y7PuLhKCpbUAW9FR_TLupd-HoIkJVqcknqw7KRfrWf3O5XxsU/exec"
+          "https://script.google.com/macros/s/AKfycbyp35rcdJNsmgzhIYxtbEnuepo1ekaMNyYH06_M0yMepHoEJPAFjnsdEPAfCxzqDzSBLg/exec"
         );
         const data = await response.json();
         console.log(data);
         setTableData(data);
-        setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -144,7 +146,7 @@ const Results = () => {
 
   // Sort table data based on the selected option
   const sortedData = sortField
-    ? filteredData.sort((a, b) => {
+    ? [...filteredData].sort((a, b) => {
         if (
           sortField === "Salary" ||
           sortField === "Bonuses" ||
@@ -174,6 +176,18 @@ const Results = () => {
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
+
+  // Reset to first page when filters/search/sort change
+  useEffect(() => {
+    setPage(1);
+  }, [searchQuery, filters, sortField]);
+
+  // Keep page in range if result count shrinks
+  useEffect(() => {
+    if (page > totalPages) {
+      setPage(totalPages || 1);
+    }
+  }, [totalPages]);
 
   // Modify firm size display
   const simplifyFirmSize = (size) => {
@@ -283,8 +297,27 @@ const Results = () => {
         <TableBody>
           {loading ? (
             <TableRow>
-              <TableCell colSpan={10} align="center">
-                <CircularProgress />
+              <TableCell
+                colSpan={10}
+                align="center"
+                sx={{ color: "white", py: 4 }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <CircularProgress />
+                  <Typography
+                    variant="body1"
+                    sx={{ color: "white", mt: 2 }}
+                    aria-live="polite"
+                  >
+                    Loading results... This may take a few seconds.
+                  </Typography>
+                </div>
               </TableCell>
             </TableRow>
           ) : (
