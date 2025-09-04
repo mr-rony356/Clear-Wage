@@ -382,7 +382,7 @@ function Modal({ open, onClose }) {
     setIsSubmitting(true);
 
     const scriptUrl =
-      "https://script.google.com/macros/s/AKfycbxWJzD7pTYLpFvgi_Y7PuLhKCpbUAW9FR_TLupd-HoIkJVqcknqw7KRfrWf3O5XxsU/exec";
+      "https://script.google.com/macros/s/AKfycbyp35rcdJNsmgzhIYxtbEnuepo1ekaMNyYH06_M0yMepHoEJPAFjnsdEPAfCxzqDzSBLg/exec";
     const formDataAllSteps = { ...formData };
 
     // Parse currency fields back to numbers for submission

@@ -27,12 +27,13 @@ function Form() {
     const fetchTotalEntries = async () => {
       try {
         const response = await fetch(
-          "https://script.google.com/macros/s/AKfycbxWJzD7pTYLpFvgi_Y7PuLhKCpbUAW9FR_TLupd-HoIkJVqcknqw7KRfrWf3O5XxsU/exec"
+          "https://script.google.com/macros/s/AKfycbyp35rcdJNsmgzhIYxtbEnuepo1ekaMNyYH06_M0yMepHoEJPAFjnsdEPAfCxzqDzSBLg/exec"
         );
         const data = await response.json();
         setTotalEntries(data.length);
       } catch (error) {
         console.error("Error fetching total entries:", error);
+        setTotalEntries(1000); // Fallback number if fetch fails
       }
     };
 
