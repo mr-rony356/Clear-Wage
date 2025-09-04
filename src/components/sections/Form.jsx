@@ -33,7 +33,6 @@ function Form() {
         setTotalEntries(data.length);
       } catch (error) {
         console.error("Error fetching total entries:", error);
-        setTotalEntries(1000); // Fallback number if fetch fails
       }
     };
 
